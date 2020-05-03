@@ -14,8 +14,7 @@ def create_profile(sender, instance, created, **kwargs):
 def save_profile(sender, instance, **kwargs):
     instance.profile.save()
 
-def empty:
-    print("m")
+
 #
 # @receiver(post_save, sender=User)
 # def create_permissionmodel(sender, instance, created, **kwargs):

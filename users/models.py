@@ -22,6 +22,8 @@ class PermissionModel(models.Model):
     company=models.CharField(max_length=100)
     active=models.BooleanField(default=True)
     resume=models.FileField(upload_to="resume", validators=[validate_file_extension])
+    image=models.ImageField(default='default.jpg',upload_to='profile_pics')
+
 
     def __str__(self):
         return self.user.username
