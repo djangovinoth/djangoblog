@@ -1,0 +1,160 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">View Personal Information</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-6 mb-3" style="background: #f1f1f1">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          First Name :
+
+        </div>
+        <div class="col-md-6 mb-3" style="background: #f1f1f1">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          {{perdet.firstName}}
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Last Name :
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+          {{perdet.lastName}}
+        </div>
+        <div class="col-md-6 mb-3" style="background: #f1f1f1">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Father Name :
+
+        </div>
+        <div class="col-md-6 mb-3" style="background: #f1f1f1">
+          {{perdet.fatherName}}
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Gender :
+
+        </div>
+
+        <div class="col-md-6 mb-3" style="background:#f0f6fc">
+
+          {{perdet.gender}}
+        </div>
+
+        <!-- <div>
+          <label>Gender : {{perdet.gender}}</label>
+
+        </div> -->
+        <div class="col-md-6 mb-3" style="background: #f1f1f1">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Phone Number :
+
+        </div>
+        <div class="col-md-6 mb-3" style="background: #f1f1f1">
+
+          {{perdet.phoneNumber}}
+        </div>
+
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+          <label>Country:</label>
+
+
+        </div>
+
+
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+            {{perdet.countryName}}
+
+          </div>
+
+
+
+
+
+        <!-- radio -->
+
+        <!-- end radio -->
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          DOB :
+        </div>
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+            {{perdet.dateOfBrith}}
+
+          </div>
+
+
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+            Current Location :
+          </div>
+        <div class="col-md-6 mb-3">
+              {{perdet.currentLocation}}
+
+        </div>
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          Pan Number :
+        </div>
+        <div class="col-md-6 mb-3">
+
+          {{perdet.panNumber}}
+        </div>
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          Aathar Number :
+        </div>
+        <div class="col-md-6 mb-3">
+            {{perdet.aatharNumber}}
+        </div>
+        <div class="col-md-6 mb-3">
+          <p>Current Mailing Address : </p>
+            {{perdet.currnetMailAddress}}
+        </div>
+        <div class="col-md-6 mb-3">
+            <p>Permanent Mailing Address : </p>
+              {{perdet.permanentMailAddress}}
+        </div>
+
+      </div>
+    </fieldset>
+
+
+
+
+
+
+
+    <div class="form-group" align="right">
+
+      <a class="btn btn-outline-info" href="{%url 'updatepersonaldetails'%}">Update</a>
+      <a class="btn btn-outline-info" href="{%url 'addskillsset'%}">Continue</a>
+
+
+    </div>
+  </form>
+</div>
+
+{% endblock content %}
+{% block script %}
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $(function() {
+
+    $("#datepicker").datepicker();
+  });
+</script>
+{% endblock %}

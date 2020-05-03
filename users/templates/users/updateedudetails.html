@@ -1,0 +1,194 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h3 style="text-align:center">Edit Educational Details</h3>
+<hr>
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">School Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+
+          <input type="text" class="form-control" name="schoolX" value="{{ls.schoolX}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="specializationX" value="{{ls.specializationX}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+            <input type="text" class="form-control" name="scoreX" value="{{ls.scoreX}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <select id="inputState" name="yearOfPassingX" class="form-control">
+        <option selected>{{ls.yearOfPassingX}}</option>
+
+        {%for l in lst %}
+        <option>{{l}}</option>
+        {%endfor%}
+      </select>
+
+        </div>
+      </div>
+    </fieldset>
+
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">High School Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          <input type="text" class="form-control" name="schoolXII" value="{{ls.schoolXII}}">
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+            <input type="text" class="form-control" name="specializationXII" value="{{ls.specializationXII}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="scoreXII" value="{{ls.scoreXII}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <select id="inputState" name="yearOfPassingXII" class="form-control">
+        <option selected>{{ls.yearOfPassingXII}}</option>
+
+        {%for l in lst %}
+        <option>{{l}}</option>
+        {%endfor%}
+      </select>
+
+        </div>
+      </div>
+    </fieldset>
+
+
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">Diploma Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          <input type="text" class="form-control" name="diploma" value="{{ls.diploma}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="specializationDiploma" value="{{ls.specializationDiploma}}">
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="scoreDiploma" value="{{ls.scoreDiploma}}">
+
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <select id="inputState" name="yearOfPassingDiploma" class="form-control">
+        <option selected>{{ls.yearOfPassingDiploma}}</option>
+
+        {%for l in lst %}
+        <option>{{l}}</option>
+        {%endfor%}
+      </select>
+
+        </div>
+      </div>
+    </fieldset>
+
+
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">UG Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+        <input type="text" class="form-control" name="UG" value="{{ls.UG}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="specializationUG" value="{{ls.specializationUG}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="scoreUG" value="{{ls.scoreUG}}">
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <select id="inputState" name="yearOfPassingUG" class="form-control">
+        <option selected>{{ls.yearOfPassingUG}}</option>
+
+        {%for l in lst %}
+        <option>{{l}}</option>
+        {%endfor%}
+      </select>
+
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">PG Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          <input type="text" class="form-control" name="PG" value="{{ls.PG}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" name="specializationPG" value="{{ls.specializationPG}}">
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="scorePG" value="{{ls.scorePG}}">
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <select id="inputState" name="yearOfPassingPG" class="form-control">
+        <option selected>{{ls.yearOfPassingPG}}</option>
+
+        {%for l in lst %}
+        <option>{{l}}</option>
+        {%endfor%}
+      </select>
+
+        </div>
+      </div>
+    </fieldset>
+
+
+
+
+
+
+    <div class="form-group" align="right">
+
+      <button class="btn btn-outline-info" type="submit">Update & Continue</button>
+
+    </div>
+  </form>
+</div>
+{% endblock content %}

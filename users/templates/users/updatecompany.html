@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h3 style="text-align:center">Company Details</h3>
+<hr>
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">Update Comp Details - {{companyset.objects.id}}</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          <input type="text" class="form-control" name="companyname" value="{{ls.companyname}}">
+
+        <!-- {{company_form.companyname}} -->
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="exp" value="{{ls.exp}}">
+
+        </div>
+
+      </div>
+      <a class="btn btn-outline-info" type="submit" href="{%url 'addcompanyView'%}">Cancel</a>
+      <button class="btn btn-outline-info" type="submit">Update</button>
+    </fieldset>
+
+
+  </form>
+</div>
+{% endblock content %}

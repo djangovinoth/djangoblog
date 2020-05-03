@@ -1,0 +1,178 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h3 style="text-align:center">Educational Details</h3>
+<hr>
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">School Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>School name : </p>{{edudet.schoolX}}
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Specialization: </p>{{edudet.schoolX}}
+
+      </div>
+      <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>Percentage:  </p> {{edudet.scoreX}}
+
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Year of Passing:   </p>{{edudet.yearOfPassingX}}
+
+
+        </div>
+      </div>
+    </fieldset>
+
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">High School Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>School name : </p>{{edudet.schoolXII}}
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Specialization: </p>{{edudet.specializationXII}}
+
+      </div>
+      <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>Percentage:  </p> {{edudet.scoreXII}}
+
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Year of Passing:   </p>{{edudet.yearOfPassingXII}}
+
+
+        </div>
+      </div>
+    </fieldset>
+
+
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">Diploma Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>School name : </p>{{edudet.diploma}}
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Specialization: </p>{{edudet.specializationDiploma}}
+
+      </div>
+      <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>Percentage:  </p> {{edudet.scoreDiploma}}
+
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Year of Passing:   </p>{{edudet.yearOfPassingDiploma}}
+
+
+        </div>
+      </div>
+    </fieldset>
+
+
+
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">UG Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>School name : </p>{{edudet.UG}}
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Specialization: </p>{{edudet.specializationUG}}
+
+      </div>
+      <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>Percentage:  </p> {{edudet.scoreUG}}
+
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Year of Passing:   </p>{{edudet.yearOfPassingUG}}
+
+
+        </div>
+      </div>
+    </fieldset>
+
+
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">PG Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>School name : </p>{{edudet.PG}}
+
+
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Specialization: </p>{{edudet.specializationPG}}
+
+      </div>
+      <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+          <p>Percentage:  </p> {{edudet.scorePG}}
+
+        </div>
+        <div class="col-md-3 mb-3" style="border: 2px solid #f1f1f1; padding: 10px; border-radius: 10px">
+            <p>Year of Passing:   </p>{{edudet.yearOfPassingPG}}
+
+
+        </div>
+      </div>
+    </fieldset>
+
+
+    <div class="form-group" align="right">
+      <a class="btn btn-outline-info" href="{%url 'updateedudetails'%}">Update</a>
+      <a class="btn btn-outline-info" href="{%url 'addcompanyView'%}">Continue</a>
+
+    </div>
+  </form>
+</div>
+{% endblock content %}

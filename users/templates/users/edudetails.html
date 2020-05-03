@@ -1,0 +1,137 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h3 style="text-align:center">Educational Details</h3>
+<hr>
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">School Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          {{u_form.schoolX}}
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.specializationX}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.scoreX}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.yearOfPassingX }}
+        </div>
+      </div>
+    </fieldset>
+
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">High School Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          {{u_form.schoolXII}}
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.specializationXII}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.scoreXII}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.yearOfPassingXII }}
+        </div>
+      </div>
+    </fieldset>
+
+
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">Diploma Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          {{u_form.diploma}}
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.specializationDiploma}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.scoreDiploma}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.yearOfPassingDiploma }}
+        </div>
+      </div>
+    </fieldset>
+
+
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">UG Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          {{u_form.UG}}
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.specializationUG}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.scoreUG}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.yearOfPassingUG }}
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+  <legend class="border-bottom mb-4">PG Details</legend>
+      <div class="form-row">
+
+        <div class="col-md-9 mb-3">
+          {{u_form.PG}}
+        </div>
+        <div class="col-md-3 mb-3">
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.specializationPG}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.scorePG}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{u_form.yearOfPassingPG }}
+        </div>
+      </div>
+    </fieldset>
+
+
+
+
+
+
+    <div class="form-group" align="right">
+
+      <button class="btn btn-outline-info" type="submit">Save & Continue</button>
+
+    </div>
+  </form>
+</div>
+{% endblock content %}

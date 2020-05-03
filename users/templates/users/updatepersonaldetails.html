@@ -1,0 +1,203 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">Update Personal Information</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          First Name :
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          <input type="text" class="form-control" name="firstName" value="{{personalset.firstName}}">
+
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Last Name :
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control" name="lastName" value="{{personalset.lastName}}">
+
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Father Name :
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control" name="fatherName" value="{{personalset.fatherName}}">
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Gender :
+
+        </div>
+
+        <div class="col-md-6 mb-3" style="background:#f0f6fc">
+
+          <div class="btn-group col-md-3">
+            <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="M" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Male
+            </label>
+          </div>
+          <div class="btn-group col-md-3">
+            <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="F">
+            <label class="form-check-label" for="exampleRadios2">
+              Femal
+            </label>
+          </div>
+          <div class="btn-group col-md-3">
+            <input class="form-check-input" type="radio" name="gender" id="exampleRadios3" value="O">
+            <label class="form-check-label" for="exampleRadios3">
+              Others
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Phone Number :
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control" name="phoneNumber" value="{{personalset.phoneNumber}}">
+
+
+        </div>
+
+
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+          <label>Country:</label>
+
+
+        </div>
+
+
+
+
+
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+            {{personal_form.countryName}}
+
+
+    </div>
+
+
+
+        <!-- radio -->
+
+        <!-- end radio -->
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          DOB :
+        </div>
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+            <input type="text" class="form-control" id="datepicker" name="dateOfBrith" value="{{personalset.dateOfBrith}}">
+          </div>
+
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+            Current Location :
+          </div>
+
+        <div class="col-md-6 mb-3">
+
+          <select id="cars" class="form-control" name="currentLocation">
+  <option value="{{personalset.currentLocation}}">{{personalset.currentLocation}}</option>
+
+</select>
+
+        </div>
+
+
+
+
+<div class="col-md-6 mb-3" style="width: 50%; float: left;">
+  Pan Number :
+</div>
+
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control" name="panNumber" value="{{personalset.panNumber}}">
+
+
+
+        </div>
+
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          Aathar Number :
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control" name="aatharNumber" value="{{personalset.aatharNumber}}">
+
+
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <p>Current Mailing Address : </p>
+          <textarea  type="text" class="form-control" name="currnetMailAddress" value="{{personalset.currnetMailAddress}}">
+            {{personalset.currnetMailAddress}}
+            </textarea>
+
+
+        </div>
+        <div class="col-md-6 mb-3">
+      <p>Permanent Mailing Address : </p>
+          <textarea type="text" class="form-control" name="permanentMailAddress" value="{{personalset.permanentMailAddress}}">
+            {{personalset.permanentMailAddress}}
+  </textarea>
+        </div>
+
+      </div>
+    </fieldset>
+
+
+
+
+
+
+
+    <div class="form-group" align="right">
+      <a class="btn btn-outline-info" href="{%url 'personaldetailsView'%}">Cancel</a>
+      <button class="btn btn-outline-info" type="submit">Update</button>
+
+    </div>
+  </form>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $(function() {
+
+    $("#datepicker").datepicker();
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">Add Personal Information</h5>
+
+      <hr>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          First Name :
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          {{personal_form.firstName}}
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Last Name :
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+          {{personal_form.lastName}}
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Father Name :
+
+        </div>
+        <div class="col-md-6 mb-3">
+          {{personal_form.fatherName}}
+        </div>
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Gender :
+
+        </div>
+
+        <div class="col-md-6 mb-3" style="background:#f0f6fc">
+
+          <div class="btn-group col-md-3">
+            <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="M" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Male
+            </label>
+          </div>
+          <div class="btn-group col-md-3">
+            <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="F">
+            <label class="form-check-label" for="exampleRadios2">
+              Femal
+            </label>
+          </div>
+          <div class="btn-group col-md-3">
+            <input class="form-check-input" type="radio" name="gender" id="exampleRadios3" value="O">
+            <label class="form-check-label" for="exampleRadios3">
+              Others
+            </label>
+          </div>
+        </div>
+
+        <!-- <div>
+          <label>Gender : {{personal_form.gender}}</label>
+
+        </div> -->
+        <div class="col-md-6 mb-3">
+          <!-- <input type="text" class="form-control" name="companyname" value=""> -->
+          Phone Number :
+
+        </div>
+        <div class="col-md-6 mb-3">
+
+          {{personal_form.phoneNumber}}
+        </div>
+
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+          <label>Country:</label>
+
+
+        </div>
+
+
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+            {{personal_form.countryName}}
+
+          </div>
+
+
+
+
+
+        <!-- radio -->
+
+        <!-- end radio -->
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          DOB :
+        </div>
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+
+            {{personal_form.dateOfBrith}}
+
+          </div>
+
+
+          <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+            Current Location :
+          </div>
+        <div class="col-md-6 mb-3">
+              {{personal_form.currentLocation}}
+
+        </div>
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          Pan Number :
+        </div>
+        <div class="col-md-6 mb-3">
+
+          {{personal_form.panNumber}}
+        </div>
+        <div class="col-md-6 mb-3" style="width: 50%; float: left;">
+          Aathar Number :
+        </div>
+        <div class="col-md-6 mb-3">
+            {{personal_form.aatharNumber}}
+        </div>
+        <div class="col-md-6 mb-3">
+          <p>Current Mailing Address : </p>
+            {{personal_form.currnetMailAddress}}
+        </div>
+        <div class="col-md-6 mb-3">
+            <p>Permanent Mailing Address : </p>
+              {{personal_form.permanentMailAddress}}
+        </div>
+
+      </div>
+    </fieldset>
+
+
+
+
+
+
+
+    <div class="form-group" align="right">
+
+      <button class="btn btn-outline-info" type="submit">Save & Continue</button>
+
+    </div>
+  </form>
+</div>
+
+{% endblock content %}
+{% block script %}
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $(function() {
+
+    $("#datepicker").datepicker();
+  });
+</script>
+{% endblock %}
