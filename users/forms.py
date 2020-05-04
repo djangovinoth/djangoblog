@@ -21,7 +21,7 @@ class PermissionForm(forms.ModelForm):
 
     class Meta:
         model = PermissionModel
-        fields = ['phone', 'role','company','resume']
+        fields = ['phone', 'role','company','resume','image']
 
 
 

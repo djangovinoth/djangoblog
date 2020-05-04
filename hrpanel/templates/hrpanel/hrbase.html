@@ -39,17 +39,9 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
-              <!-- {%if per.role == "Employer"%} -->
-                <!-- <a class="nav-item nav-link" href="{% url 'hrpanel-hrhome' %}">HrPanel</a> -->
-                <!-- <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a> -->
-                <!-- <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> -->
-                <!-- {%else%} -->
+                <a class="nav-item nav-link" href="{% url 'hrpanel-hrhome' %}">HrPanel</a>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                <!-- {%endif%} -->
-
-
-
                 <div style="background:#008064">
 
 
@@ -66,8 +58,49 @@
     </header>
 
 
-    <main role="main" class="container ">
+
+    <main role="main" class="container col-md-12">
+
       <div class="row ">
+
+        <!-- <div class="col-md-2">
+          <div class="content-section">
+            <h3>HrOur Sidebar</h3>
+            <p class='text-muted'>You can put any information here you'd like.
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-mail' %}">Mail</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-freshersprofile' %}">Freshers Profile</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-experienceprofile' %}">Expereince Profile</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-createnewjob' %}">Create New Job Id</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-postjob' %}">Post a Job</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-shortlisted' %}">Short Listed</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-addtechnicalteam' %}">Add Technical Team</a></li>
+
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-offlineuser' %}">Offline Users</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-candidatetracker'%}">Candiate Traker</a></li>
+              </ul>
+            </p>
+          </div>
+        </div> -->
+        <div class="col-md-2">
+
+
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-mail' %}">Mail</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-freshersprofile' %}">Freshers Profile</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-experienceprofile' %}">Expereince Profile</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-createnewjob' %}">Create New Job Id</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-postjob' %}">Post a Job</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-shortlisted' %}">Short Listed</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-addtechnicalteam' %}">Add Technical Team</a></li>
+
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-offlineuser' %}">Offline Users</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-candidatetracker'%}">Candiate Traker</a></li>
+              </ul>
+            </p>
+
+        </div>
+
         <div class="col-md-8" align="left">
           {% if messages %}
             {% for message in messages %}
@@ -78,22 +111,9 @@
           {% endif %}
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-3">
-          <!-- <div class="content-section"> -->
-            <!-- <h3>Our Sidebar</h3> -->
-            <!-- <p class='text-muted'>You can put any information here you'd like. -->
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-              </ul>
-            </p>
-          <!-- </div> -->
-        </div>
+
       </div>
     </main>
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

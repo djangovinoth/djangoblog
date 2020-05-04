@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
+    'hrpanel.apps.HrpanelConfig',
     'crispy_forms',
     'django_countries',
     'django.contrib.admin',
