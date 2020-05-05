@@ -1,31 +1,83 @@
 {% extends "hrpanel/hrbase.html" %}
-{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h4>Freshers Profile</h4>
-    <table class="table table-striped">
-      <tbody>
-        <thead>
-          <th>Name</th>
-          <th>Mail</th>
-            <th>Phone</th>
-              <th>Role</th>
-              <th>Resume</th>
-                <th>Image</th>
-        </thead>
-        {%for u in per%}
-        <tr>
-          <td>{{u.user.username}}</td>
-           <td>{{u.user.email}}</td>
-            <td>{{u.phone}}</td>
-            <td>{{u.role}}</td>
-            <td><a href="{%url 'hrpanel-download' u.id%}" download>Resume</a></td>
-            <td><a href="{{ MEDIA_URL }}">Image</a></td>
+<form method="post">
+      {% csrf_token %}
+      <h4>Freshers Profile</h4>
+  <div class="form-group" style="align:right" >
+      <button class="btn btn-outline-success" type="submit">ShortList Selected Candiates</button>
 
-        </tr>
+  </div>
 
-        {%endfor%}
-      </tbody>
-    </table>
+
+
+  <table class="table table-striped">
+    <tbody>
+      <thead>
+        <th>Name</th>
+        <th>Mail</th>
+          <th>Phone</th>
+            <th>Role</th>
+            <th>Resume</th>
+              <th>Image</th>
+              <th>ShortList</th>
+                <th>Domain</th>
+                  <th>Prefered Location</th>
+                    <th>Current Location</th>
+                    <th>Schduled Date</th>
+                      <th>Job Id</th>
+
+
+
+
+      </thead>
+
+      {%for u in per%}
+      <tr>
+        <td>{{u.user.username}}</td>
+         <td>{{u.user.email}}</td>
+          <td>{{u.phone}}</td>
+          <td>{{u.role}}</td>
+          <td><a href="{%url 'hrpanel-download' u.id%}" download>Resume</a></td>
+          <td><a href="{{ MEDIA_URL }}">Image</a></td>
+          <!-- <td><input type="checkbox" name="short{{u.id}}" value=""></td> -->
+          <!-- <td>  <input name="{{u.id}}" type="checkbox"  onclick="window.location.assign('{% url 'hrpanel-addfreshershortlist' u.id%}')"/></td> -->
+          <td>  <input name="{{u.id}}" id={{u.id}} type="checkbox"  onChange="this.form.submit()" /></td>
+          <!-- " -->
+<td>Domain</td>
+<td>Prefered Location</td>
+<td>Current Location</td>
+<td>Schduled Date</td>
+<td> <input name="jobid{{u.id}}" id="jobid{{u.id}}" type="text"  value=""/></td>
+
+      </tr>
+
+      {%endfor%}
+    </tbody>
+  </table>
+</form>
+
+  {% if per.has_other_pages %}
+    <ul class="pagination">
+      {% if per.has_previous %}
+        <li><a class="btn btn-outline-info mb-4" href="?page={{ per.previous_page_number }}">Previous</a></li>
+      {% else %}
+        <li class="btn btn-outline-info mb-4 disabled"><span>First</span></li>
+      {% endif %}
+      {% for i in per.paginator.page_range %}
+        {% if per.number == i %}
+          <li class="btn btn-outline-info mb-4 active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if per.has_next %}
+        <li><a class="btn btn-outline-info mb-4" href="?page={{ per.next_page_number }}">Next</a></li>
+      {% else %}
+        <li class="btn btn-outline-info mb-4 disabled"><span>Last</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
 
 {% endblock content %}

@@ -27,7 +27,7 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Guru</a>
+          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Guru1</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
@@ -48,6 +48,7 @@
                 <a class="nav-item nav-link" href="#">Welcome, {{request.user}}</a>
                     </div>
               {% else %}
+
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
               {% endif %}
@@ -82,7 +83,7 @@
             </p>
           </div>
         </div> -->
-        <div class="col-md-2">
+        <div class="col-md-1.5">
 
 
               <ul class="list-group">
@@ -101,12 +102,18 @@
 
         </div>
 
-        <div class="col-md-8" align="left">
+        <div class="col-md-10 scroll" align="left">
           {% if messages %}
             {% for message in messages %}
+              {%if message.tags == "error" %}
+              <div class="alert alert-danger">
+                {{ message }}
+              </div>
+              {%else%}
               <div class="alert alert-{{ message.tags }}">
                 {{ message }}
               </div>
+              {%endif%}
             {% endfor %}
           {% endif %}
           {% block content %}{% endblock %}

@@ -14,6 +14,7 @@ urlpatterns = [
     path('postjob/', views.postjob, name='hrpanel-postjob'),
     path('shortlisted/', views.shortlisted, name='hrpanel-shortlisted'),
     path('download/<int:id>', views.download, name='hrpanel-download'),
+    path('addfreshershortlist/<int:id>', views.addfreshershortlist, name='hrpanel-addfreshershortlist'),
 
 
 
