@@ -1,5 +1,49 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Post Job</h1>
+    <h1>Post a Job</h1>
+    <table class="table table-striped">
+      <thead>
+        <th>Created By</th>
+        <th>Jobid</th>
+        <th>Domain</th>
+        <th>Contract</th>
+        <th>Skills</th>
+
+        <th></th>
+      </thead>
+      {%for postjob in per%}
+
+  <tr>
+    <td>{{postjob.user}}</td>
+    <td>{{postjob.jobid}}</td>
+      <td>{{postjob.domain}}</td>
+        <td>{{postjob.contractjob}}</td>
+          <td>{{postjob.mandatoryskils}}</td>
+            </tr>
+      {%endfor%}
+
+    </table>
+    {% if per.has_other_pages %}
+      <ul class="pagination">
+        {% if per.has_previous %}
+          <li><a class="btn btn-outline-info mb-4" href="?page={{ per.previous_page_number }}">Previous</a></li>
+        {% else %}
+          <li class="btn btn-outline-info mb-4 disabled"><span>First</span></li>
+        {% endif %}
+        {% for i in per.paginator.page_range %}
+          {% if per.number == i %}
+            <li class="btn btn-outline-info mb-4 active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if per.has_next %}
+          <li><a class="btn btn-outline-info mb-4" href="?page={{ per.next_page_number }}">Next</a></li>
+        {% else %}
+          <li class="btn btn-outline-info mb-4 disabled"><span>Last</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+
 {% endblock content %}

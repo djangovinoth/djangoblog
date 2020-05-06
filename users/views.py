@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect,reverse,render_to_response
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm,EduDetailsUpdateForm,CompanyDetailsUpdateForm,PersonalDetailsUpdateForm,SkillSetDetailsUpdateForm,PermissionForm
 # ,ProfileResumeUpdateForm,ProfileImageUpdateForm,ProfilePhoneUpdateForm
 from .models import Profile,EdudetailsModel,CompanyDetailsModel,PersonalDetailsModel,SkillSetDetailsModel
-from django.template import RequestContext
+
 
 
 @login_required
