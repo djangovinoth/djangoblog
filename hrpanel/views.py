@@ -90,7 +90,9 @@ def freshersprofile(request):
 
             try:
                 flag = request.POST[str(p.id)]
-
+                data=request.POST['custId']
+                print('-------------------------------------------------------------------------')
+                print(data)
                 if flag=="on":
                     if request.POST["jobid"+str(p.id)] =="" or request.POST["jobid"+str(p.id)].isspace():
                         messages.error(request,f'Oops str({p.id}) we cant shortlist, Job id not selected kindly add it')
@@ -122,7 +124,7 @@ def freshersprofile(request):
 
 def experienceprofile(request):
 
-    print('pls use form in tr tag')
+    print('pls use form in tr tag and try with hidden input parameter')
     print('https://stackoverflow.com/questions/34998769/django-dynamic-name-attribute-and-getting-values-in-views-py')
 
     return render(request, 'hrpanel/experienceprofile.html')
