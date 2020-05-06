@@ -36,6 +36,23 @@ def addfreshershortlist(request,id):
     return redirect('hrpanel-freshersprofile')
 
 
+def addfreshershortlist(request,id):
+    username=PermissionModel.objects.select_related('user').get(id=id)
+
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+    time.sleep(0.5)
+
+    createddate=dt_string
+    updateddate=dt_string
+
+
+    t=ShortlistedCandiateModel(user=request.user,candiatename = username,createddate=createddate,updateddate=updateddate)
+    t.save()
+    request.user.shortlistedcandiatemodel.add(t)
+    messages.success(request, f'Your account has been saved!{id}')
+    return redirect('hrpanel-freshersprofile')
+
 
 def download(request,id):
 
@@ -123,11 +140,61 @@ def freshersprofile(request):
     return render(request, 'hrpanel/freshersprofile.html',context)
 
 def experienceprofile(request):
+    users=User.objects.all()
+    c = request.GET.get('page', 1)
+    per=PermissionModel.objects.select_related('user').all()
 
-    print('pls use form in tr tag and try with hidden input parameter')
-    print('https://stackoverflow.com/questions/34998769/django-dynamic-name-attribute-and-getting-values-in-views-py')
+    recordPerPage=3
+    paginator = Paginator(per, recordPerPage)
 
-    return render(request, 'hrpanel/experienceprofile.html')
+    try:
+        page = paginator.page(c)
+
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+    # end Page nation
+
+    if request.method == 'POST':
+        print('posing data')
+        candiate_form = ShortlistedCandidateDetailsForm(request.POST)
+        now = datetime.now()
+        dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+        time.sleep(0.5)
+        createddate=dt_string
+        updateddate=dt_string
+        try:
+            data=request.POST.get("custId")
+            postdata=data.split('-')
+            candiatename=postdata[1]
+            jobid=request.POST['jobid'+postdata[0]]
+            if jobid=="" or jobid is None:
+                messages.error(request, f'Please select Job id for this user - {candiatename}')
+            else:
+                if not ShortlistedCandiateModel.objects.filter(candiatename=candiatename,jobid=jobid).exists():
+                    t=ShortlistedCandiateModel(user=request.user,candiatename = candiatename,jobid=jobid,createddate=createddate,updateddate=updateddate)
+                    t.save()
+                    request.user.shortlistedcandiatemodel.add(t)
+                    messages.success(request, f'user is short listed !{candiatename}')
+                else:
+                    messages.warning(request, f'user is alredy in short listed list !{candiatename}')
+        except:
+            raise
+            pass
+    else:
+        candiate_form = ShortlistedCandidateDetailsForm()
+
+    context={
+    'users':users,
+    'per':page,
+    'candiate_form':candiate_form
+    }
+    # print('pls use form in tr tag and try with hidden input parameter')
+    # print('https://stackoverflow.com/questions/34998769/django-dynamic-name-attribute-and-getting-values-in-views-py')
+    return render(request, 'hrpanel/experienceprofile.html',context)
+
+
 
 def addtechnicalteam(request):
 

@@ -1,5 +1,138 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Experience Profile</h1>
+
+      <h4>Expereince Profile</h4>
+  <div class="form-group" style="align:right" >
+      <button class="btn btn-outline-success" type="submit">ShortList Selected Candiates</button>
+
+  </div>
+
+
+
+
+  <table class="table table-striped">
+    <tbody>
+      <thead>
+        <th >Name</th>
+        <th>Mail</th>
+          <th>Phone</th>
+            <th>Role</th>
+            <th>Resume</th>
+              <th>Image</th>
+              <th>ShortList</th>
+                <th>Domain</th>
+                  <th>Prefered Location</th>
+                    <th>Current Location</th>
+                    <th>Schduled Date</th>
+                      <th>Job Id</th>
+
+
+
+
+      </thead>
+
+      {%for u in per%}
+      <tr>
+        <form method="post">
+        <td>{{u.user.username}}</td>
+         <td>{{u.user.email}}</td>
+          <td>{{u.phone}}</td>
+          <td>{{u.role}}</td>
+          <td><a href="{%url 'hrpanel-download' u.id%}" download>Resume</a></td>
+          <td><a href="{{ MEDIA_URL }}">Image</a></td>
+          <!-- <td><input type="checkbox" name="short{{u.id}}" value=""></td> -->
+          <!-- <td>  <input name="{{u.id}}" type="checkbox"  onclick="window.location.assign('{% url 'hrpanel-addfreshershortlist' u.id%}')"/></td> -->
+
+                {% csrf_token %}
+          <td>  <input name="{{u.id}}" id={{u.id}} type="checkbox"  onChange="this.form.submit()" /></td>
+          <input type="hidden" id="custId" name="custId" value="{{u.id}}-{{u.user.username}}-{{u.user.email}}">
+
+<td>Domain</td>
+<td>Prefered Location</td>
+<td>Current Location</td>
+<td>Schduled Date</td>
+<td> <input name="jobid{{u.id}}" id="jobid{{u.id}}" type="text"  value=""/></td>
+<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{u.id}}">
+    Open modal
+  </button>
+</td>
+</form>
+<div class="modal fade" id="myModal{{u.id}}">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">{{u.id}}-{{u.user.username}}-{{u.user.email}}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          User Id : {{u.id}}
+          <hr>
+          User Name : {{u.user.username}}
+          <hr>
+          Email : {{u.user.email}}
+          <hr>
+          Phone: {{u.phone}}
+          <hr>
+          Role : {{u.role}}
+          <hr>
+          <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+      </tr>
+
+
+
+      {%endfor%}
+    </tbody>
+  </table>
+
+
+  {% if per.has_other_pages %}
+    <ul class="pagination">
+      {% if per.has_previous %}
+        <li><a class="btn btn-outline-info mb-4" href="?page={{ per.previous_page_number }}">Previous</a></li>
+      {% else %}
+        <li class="btn btn-outline-info mb-4 disabled"><span>First</span></li>
+      {% endif %}
+      {% for i in per.paginator.page_range %}
+        {% if per.number == i %}
+          <li class="btn btn-outline-info mb-4 active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if per.has_next %}
+        <li><a class="btn btn-outline-info mb-4" href="?page={{ per.next_page_number }}">Next</a></li>
+      {% else %}
+        <li class="btn btn-outline-info mb-4 disabled"><span>Last</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
+
 {% endblock content %}
