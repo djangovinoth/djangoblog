@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from .forms import ShortlistedCandidateDetailsForm,CreateNewJobForm
 # Create your views here.
 import os
+from django.shortcuts import get_list_or_404, get_object_or_404
+
 import time
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -17,6 +19,9 @@ import mimetypes
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+
 
 def addfreshershortlist(request,id):
     username=PermissionModel.objects.select_related('user').get(id=id)
@@ -411,3 +416,66 @@ def shortlisted(request):
 
     }
     return render(request, 'hrpanel/shortlisted.html',context)
+
+def post(request):
+    context={
+    'posts':CreateNewJobModel.objects.all()
+    }
+    return render(request, 'hrpanel/post.html',context)
+
+
+
+
+class PostListView(ListView):
+    model=CreateNewJobModel
+
+    template_name='hrpanel/post.html' #<app>/<model>_<viewtype>.html
+    context_object_name='posts'
+    ordering=['-id']
+
+    paginate_by=3
+
+class UserPostListView(ListView):
+    model=CreateNewJobModel
+
+    template_name='hrpanel/job_posts.html' #<app>/<model>_<viewtype>.html
+    context_object_name='posts'
+    paginate_by=3
+    def get_queryset(self):
+        print(self.kwargs.get('username'))
+        user=get_object_or_404(User,username=self.kwargs.get('username'))
+        return CreateNewJobModel.objects.filter(user=user).order_by('-id')
+
+
+
+class PostDetailView(DetailView):
+    model=CreateNewJobModel
+
+# class PostCreateView(LoginRequiredMixin,CreateView):
+#     model=CreateNewJobModel
+#     fields=['title','content']
+#     def form_valid(self,form):
+#         form.instance.author=self.request.user
+#         return super().form_valid(form)
+#
+# class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+#     model=CreateNewJobModel
+#     fields=['title','content']
+#     def form_valid(self,form):
+#         form.instance.author=self.request.user
+#         return super().form_valid(form)
+#
+#     def test_func(self):
+#         post=self.get_object()
+#         if self.request.user==post.author:
+#             return True
+#         return False
+#
+# class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+#     model=CreateNewJobModel
+#     success_url='/'
+#     def test_func(self):
+#         post=self.get_object()
+#         if self.request.user==post.author:
+#             return True
+#         return False

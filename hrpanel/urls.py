@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 from django.conf.urls import url
+from .views import PostListView,PostDetailView,UserPostListView
+# PostCreateView,PostUpdateView,PostDeleteView,UserPostListView
+
 
 urlpatterns = [
     path('hrhome/', views.hrhome, name='hrpanel-hrhome'),
@@ -18,7 +21,12 @@ urlpatterns = [
     path('viewcreatenewjob/<int:jobid>', views.viewcreatenewjob, name='hrpanel-viewcreatenewjob'),
     path('updatecreatenewjob/<int:jobid>', views.updatecreatenewjob, name='hrpanel-updatecreatenewjob'),
 
-
+    path('post/', PostListView.as_view(), name='hrpanel-post'),
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+    path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
+    # path('post/new', PostCreateView.as_view(), name='post-create'),
+    # path('post/<int:pk>/update', PostUpdateView.as_view(), name='post-update'),
+    # path('post/<int:pk>/delete', PostDeleteView.as_view(), name='post-delete'),
 
 
 
