@@ -1,7 +1,204 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
-
 {% block content %}
-<h1>Add Technical team</h1>
 
-{% endblock content %}
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">Add Technical Team Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+        <div class="col-md-0.5 mb-3">
+          <button class="btn btn-outline-info" type="submit">Add</button>
+        </div>
+
+
+        <div class="col-md-2 mb-3">
+          {{techincalteam_form.empname}}
+        </div>
+
+        <div class="col-md-2 mb-3">
+          {{techincalteam_form.phonenumber}}
+        </div>
+        <div class="col-md-2 mb-3">
+          {{techincalteam_form.empid}}
+        </div>
+
+        <div class="col-md-2 mb-3">
+          {{techincalteam_form.currentdesignation}}
+        </div>
+
+      </div>
+    </fieldset>
+
+
+    <table class="table table-striped"  >
+
+      <thead>
+
+        <th>Employee name</th>
+        <th>Phone number</th>
+        <th>Emp Id</th>
+        <th>Current designation</th>
+          <th>Edit/Delete</th>
+
+      </thead>
+      {%for tset in technicalset%}
+      <tr>
+        <td>{{tset.empname}}</td>
+        <td>{{tset.phonenumber}}</td>
+        <td>{{tset.empid}}</td>
+        <td>{{tset.currentdesignation}}</td>
+        <td><a data-toggle="modal" data-target="#myModal{{tset.id}}" href="#"><i class="fa fa-edit" ></i></a>
+
+          <a data-toggle="modal" data-target="#myModaldelete{{tset.id}}" href="#"><i class="fa fa-trash-o" style="font-size:20px;color:red"></i></a></td>
+
+      </tr>
+
+      <div class="modal" id="myModal{{tset.id}}">
+          <div class="modal-dialog modal-lg" >
+            <div class="modal-content">
+              <form method="post">
+                    {% csrf_token %}
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">{{tset.empname}}-{{tset.phonenumber}}-{{tset.empid}}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">
+                  <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                      Employee name :
+                    </div>
+
+                        <div class="col-md-3 mb-3">
+                <input type="hidden" name="offlineid" value="edit-{{tset.id}}">
+                <input type="text" class="form-control" name="empname" value="{{tset.empname}}">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      Phone Number :
+                    </div>
+                              <div class="col-md-3 mb-3">
+                <input type="text" class="form-control" name="phonenumber" value="{{tset.phonenumber}}">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      Emp Id :
+                    </div>
+                          <div class="col-md-3 mb-3">
+                <input type="text" class="form-control" name="empid" value="{{tset.empid}}">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      Current Designation :
+                    </div>
+                          <div class="col-md-3 mb-3">
+                  <input type="text" class="form-control" name="currentdesignation" value="{{tset.currentdesignation}}">
+                    </div>
+              </div>
+            </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="this.form.submit()">Update</button>
+
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal" id="myModaldelete{{tset.id}}">
+            <div class="modal-dialog modal-lg" >
+              <div class="modal-content">
+                <form method="post">
+                      {% csrf_token %}
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Confirm Delete This Team Below Record</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-row">
+                      <div class="col-md-3 mb-3">
+                        Employee name :
+                      </div>
+
+                          <div class="col-md-3 mb-3">
+                  <input type="hidden" name="offlineid" value="delete-{{tset.id}}">
+                  <input type="text" class="form-control" name="empname" value="{{tset.empname}}">
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        Phone Number :
+                      </div>
+                                <div class="col-md-3 mb-3">
+                  <input type="text" class="form-control" name="phonenumber" value="{{tset.phonenumber}}">
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        Emp id :
+                      </div>
+                            <div class="col-md-3 mb-3">
+                  <input type="text" class="form-control" name="empid" value="{{tset.empid}}">
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        Current Designation :
+                      </div>
+                            <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" name="currentdesignation" value="{{tset.currentdesignation}}">
+                      </div>
+                </div>
+              </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" onclick="this.form.submit()">Delete</button>
+
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+      {%endfor%}
+    </table>
+
+    {% if technicalset.has_other_pages %}
+      <ul class="pagination">
+        <li><a class="btn btn-outline-info mb-4" href="#">10 records perpage</a></li>
+
+
+        {% if technicalset.has_previous %}
+          <li><a class="btn btn-outline-info mb-4" href="?page={{ technicalset.previous_page_number }}">Previous</a></li>
+        {% else %}
+          <li class="btn btn-outline-info mb-4 disabled"><span>First</span></li>
+        {% endif %}
+        {% for i in technicalset.paginator.page_range %}
+          {% if technicalset.number == i %}
+            <li class="btn btn-outline-info mb-4 active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if technicalset.has_next %}
+          <li><a class="btn btn-outline-info mb-4" href="?page={{ technicalset.next_page_number }}">Next</a></li>
+        {% else %}
+          <li class="btn btn-outline-info mb-4 disabled"><span>Last</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+
+
+  {% endblock %}

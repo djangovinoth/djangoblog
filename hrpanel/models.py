@@ -7,6 +7,20 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 # Create your models here.
+class OfflineCandiateModel(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='offlineusermodel')
+    offlinecandiate = models.CharField(blank=True, null=True,max_length=100)
+    uploadresume = models.CharField(blank=True, null=True,max_length=100)
+    phonenumber = models.CharField(blank=True, null=True,max_length=100)
+    candiateemailid = models.CharField(blank=True, null=True,max_length=100)
+
+class TechnicalTeamModel(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='technicalteammodel')
+    empname = models.CharField(blank=True, null=True,max_length=100)
+    phonenumber = models.CharField(blank=True, null=True,max_length=100)
+    empid = models.CharField(blank=True, null=True,max_length=100)
+    currentdesignation = models.CharField(blank=True, null=True,max_length=100)
+
 
 class ShortlistedCandiateModel(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='shortlistedcandiatemodel')

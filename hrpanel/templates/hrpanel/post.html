@@ -1,6 +1,8 @@
 {% extends "hrpanel/hrbase.html" %}
 {% block content %}
+<div class="content-section">
     {% for post in posts %}
+
         <article class="media content-section">
           <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"> -->
           <div class="media-body">
@@ -33,5 +35,9 @@
     {%endif%}
 
     {%endif%}
+
+
+
+    </div>
 
 {% endblock content %}

@@ -2,4 +2,23 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <h1>Mail</h1>
+
+<!-- https://stackoverflow.com/questions/7232088/python-subject-not-shown-when-sending-email-using-smtplib-module -->
+    <!-- import smtplib
+from email.message import EmailMessage
+
+msg = EmailMessage()
+msg.set_content('This is my message')
+
+msg['Subject'] = 'Subject'
+msg['From'] = "me@gmail.com"
+msg['To'] = "you@gmail.com"
+
+# Send the message via our own SMTP server.
+server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+server.login("me@gmail.com", "password")
+server.send_message(msg)
+server.quit()
+ -->
+
 {% endblock content %}

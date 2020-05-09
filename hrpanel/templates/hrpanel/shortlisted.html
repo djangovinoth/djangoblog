@@ -1,7 +1,12 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Shortlisted Job</h1>
+<div class="content-section">
+<fieldset class="form-group">
+
+  <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+  <h5 style="text-align:center">Short Listed </h5>
+
     <table class="table table-striped">
       <thead>
         <th>Shortlisted By</th>
@@ -22,6 +27,11 @@
       {%endfor%}
 
     </table>
+
+    </fieldset>
+
+
+    </div>
     {% if per.has_other_pages %}
       <ul class="pagination">
         {% if per.has_previous %}

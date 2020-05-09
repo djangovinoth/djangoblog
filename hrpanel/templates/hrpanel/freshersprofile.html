@@ -1,9 +1,14 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<div class="content-section">
+  <fieldset class="form-group">
+
+    <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+    <h5 style="text-align:center">Freshers Profile </h5>
 <form method="post">
       {% csrf_token %}
-      <h4>Freshers Profile</h4>
+
   <div class="form-group" style="align:right" >
       <button class="btn btn-outline-success" type="submit">ShortList Selected Candiates</button>
 
@@ -89,6 +94,11 @@
     </tbody>
   </table>
 </form>
+
+
+</fieldset>
+
+</div>
 
   {% if per.has_other_pages %}
     <ul class="pagination">

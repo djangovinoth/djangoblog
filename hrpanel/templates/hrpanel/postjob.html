@@ -1,8 +1,13 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Post a Job</h1>
-    <table class="table table-striped">
+<div class="content-section">
+<fieldset class="form-group">
+
+  <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+  <h5 style="text-align:center">Post a Job </h5>
+
+    <table class="blueTable">
       <thead>
         <th>Created By</th>
         <th>Jobid</th>
@@ -10,7 +15,8 @@
         <th>Contract</th>
         <th>Skills</th>
 
-        <th></th>
+        <th>Edit/Delete</th>
+
       </thead>
       {%for postjob in per%}
 
@@ -20,10 +26,16 @@
       <td>{{postjob.domain}}</td>
         <td>{{postjob.contractjob}}</td>
           <td>{{postjob.mandatoryskils}}</td>
+          <td><a href="#"> Edit </a><a href="#"> Delete </a></td>
             </tr>
       {%endfor%}
 
     </table>
+
+
+    </fieldset>
+
+    </div>
     {% if per.has_other_pages %}
       <ul class="pagination">
         {% if per.has_previous %}

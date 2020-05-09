@@ -9,6 +9,21 @@ from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 from .models import CreateNewJobModel
 
+class OfflineCandiateForm(forms.Form):
+    offlinecandiate = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'offlinecandiate','class': "form-control",'placeholder': 'offlinecandiate'}))
+    uploadresume = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'uploadresume','class': "form-control",'placeholder': 'uploadresume'}))
+    phonenumber = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'phonenumber','class': "form-control",'placeholder': 'phonenumber'}))
+    candiateemailid = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'candiateemailid','class': "form-control",'placeholder': 'candiateemailid'}))
+
+
+class TechnicalTeamForm(forms.Form):
+    empname = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'empname','class': "form-control",'placeholder': 'empname'}))
+    phonenumber = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'phonenumber','class': "form-control",'placeholder': 'phonenumber'}))
+    empid = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'empid','class': "form-control",'placeholder': 'empid'}))
+    currentdesignation = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'currentdesignation','class': "form-control",'placeholder': 'currentdesignation'}))
+
+
+
 class ShortlistedCandidateDetailsForm(forms.Form):
 
     candiatename = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'candiatename','class': "form-control",'placeholder': 'Company name'}))

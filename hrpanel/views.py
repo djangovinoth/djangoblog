@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 from users.models import PermissionModel,Profile,EdudetailsModel,CompanyDetailsModel,PersonalDetailsModel,SkillSetDetailsModel
-from .models import ShortlistedCandiateModel,CreateNewJobModel
+from .models import ShortlistedCandiateModel,CreateNewJobModel,TechnicalTeamModel,OfflineCandiateModel
 from django.contrib.auth.models import User
-from .forms import ShortlistedCandidateDetailsForm,CreateNewJobForm
+from .forms import ShortlistedCandidateDetailsForm,CreateNewJobForm,TechnicalTeamForm,OfflineCandiateForm
 # Create your views here.
 import os
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -201,15 +201,19 @@ def experienceprofile(request):
 
 
 
-def addtechnicalteam(request):
 
-    return render(request, 'hrpanel/addtechnicalteam.html')
 
 def candidatetracker(request):
 
     return render(request, 'hrpanel/candidatetracker.html')
 
+
+
+
+
+
 def createnewjob(request):
+
 
     jobset=CreateNewJobModel.objects.filter(user=request.user)
 
@@ -364,9 +368,7 @@ def mail(request):
 
     return render(request, 'hrpanel/mail.html')
 
-def offlineuser(request):
 
-    return render(request, 'hrpanel/offlineuser.html')
 
 def postjob(request):
     c = request.GET.get('page', 1)
@@ -451,6 +453,8 @@ class UserPostListView(ListView):
 class PostDetailView(DetailView):
     model=CreateNewJobModel
 
+
+
 # class PostCreateView(LoginRequiredMixin,CreateView):
 #     model=CreateNewJobModel
 #     fields=['title','content']
@@ -479,3 +483,111 @@ class PostDetailView(DetailView):
 #         if self.request.user==post.author:
 #             return True
 #         return False
+
+
+
+def addtechnicalteam(request):
+    c = request.GET.get('page', 1)
+    alldata=TechnicalTeamModel.objects.filter(user=request.user).order_by('-id')
+
+    paginator = Paginator(alldata, 3)
+
+    try:
+        page = paginator.page(c)
+
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+
+
+
+    if request.method == 'POST':
+
+        techincalteam_form = TechnicalTeamForm(request.POST)
+        if techincalteam_form.is_valid():
+
+            empname=techincalteam_form.cleaned_data["empname"]
+            phonenumber = techincalteam_form.cleaned_data["phonenumber"]
+            empid = techincalteam_form.cleaned_data["empid"]
+            currentdesignation = techincalteam_form.cleaned_data["currentdesignation"]
+            print(empname)
+            t=TechnicalTeamModel(user=request.user,
+            empname=empname,phonenumber=phonenumber,empid=empid,
+            currentdesignation=currentdesignation)
+            t.save()
+            messages.success(request, f'Your new job id is generated!')
+            return redirect('hrpanel-addtechnicalteam')
+        else:
+            print(techincalteam_form.errors)
+    else:
+        techincalteam_form = TechnicalTeamForm()
+
+
+    context={
+    'techincalteam_form':techincalteam_form,
+    'technicalset':page
+    }
+    return render(request, 'hrpanel/addtechnicalteam.html',context=context)
+
+
+
+def offlineuser(request):
+    c = request.GET.get('page', 1)
+    alldata=OfflineCandiateModel.objects.filter(user=request.user).order_by('-id')
+    paginator = Paginator(alldata, 3)
+    try:
+        page = paginator.page(c)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+    if request.method == 'POST':
+        offline_form = OfflineCandiateForm(request.POST)
+        if offline_form.is_valid():
+            isSave=False
+            try:
+                offlineid=request.POST.get("offlineid")
+                edit=offlineid.split('-')
+                if edit[0] == 'edit':
+                    offlinels=OfflineCandiateModel.objects.get(id=edit[1])
+                    print(offlinels)
+                    offlinels.offlinecandiate=request.POST.get("offlinecandiate")
+                    offlinels.uploadresume=request.POST.get("uploadresume")
+                    offlinels.phonenumber=request.POST.get("phonenumber")
+                    offlinels.candiateemailid=request.POST.get("candiateemailid")
+                    offlinels.save()
+                    offlinels.save(update_fields=['offlinecandiate'])
+                    offlinels.save(update_fields=['uploadresume'])
+                    offlinels.save(update_fields=['phonenumber'])
+                    offlinels.save(update_fields=['candiateemailid'])
+                elif edit[0] == 'delete':
+                    OfflineCandiateModel.objects.get(id=edit[1]).delete()
+            except:
+                isSave=True
+
+                # Update data in Db
+            if isSave:
+                offlinecandiate=offline_form.cleaned_data["offlinecandiate"]
+                uploadresume = offline_form.cleaned_data["uploadresume"]
+                phonenumber = offline_form.cleaned_data["phonenumber"]
+                candiateemailid = offline_form.cleaned_data["candiateemailid"]
+                t=OfflineCandiateModel(user=request.user,
+                offlinecandiate=offlinecandiate,uploadresume=uploadresume,phonenumber=phonenumber,
+                candiateemailid=candiateemailid)
+                t.save()
+                messages.success(request, f'Off line candate {offlinecandiate} is added success fully !')
+                # return redirect('hrpanel-offlineuser')
+        else:
+            print(offline_form.errors)
+    else:
+        offline_form = OfflineCandiateForm()
+
+
+    context={
+    'offline_form':offline_form,
+    'offlineset':page
+    }
+
+    return render(request, 'hrpanel/offlineuser.html',context)
