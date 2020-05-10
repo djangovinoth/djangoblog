@@ -49,7 +49,17 @@
           <td><a href="{{ MEDIA_URL }}">Image</a></td>
           <!-- <td><input type="checkbox" name="short{{u.id}}" value=""></td> -->
           <!-- <td>  <input name="{{u.id}}" type="checkbox"  onclick="window.location.assign('{% url 'hrpanel-addfreshershortlist' u.id%}')"/></td> -->
-          <td>  <input name="{{u.id}}" id={{u.id}} type="checkbox"  onChange="this.form.submit()" /></td>
+          <td>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-none">
+
+
+             <input name="{{u.id}}" id={{u.id}} type="checkbox"  onChange="this.form.submit()" /><i class="fa fa-list-alt" style="font-size:25px;color:teal"></i>
+
+           </label>
+</div></td>
+
+
           <input type="hidden" id="custId" name="custId" value="{{u.id}}-{{u.user.username}}-{{u.user.email}}">
 
 <td>Domain</td>

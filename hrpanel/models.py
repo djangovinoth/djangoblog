@@ -7,6 +7,15 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 # Create your models here.
+class ScheduledCandiateModel(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='scheduledcandiatemodel')
+    jobid = models.CharField(blank=True, null=True,max_length=100)
+    scheduleddate = models.CharField(blank=True, null=True,max_length=100)
+    candidatename = models.CharField(blank=True, null=True,max_length=100)
+    candidatephone = models.CharField(blank=True, null=True,max_length=100)
+    candidateemailid = models.CharField(blank=True, null=True,max_length=100)
+
+
 class OfflineCandiateModel(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='offlineusermodel')
     offlinecandiate = models.CharField(blank=True, null=True,max_length=100)

@@ -606,76 +606,7 @@ def postjob(request):
     return render(request, 'hrpanel/postjob.html',context)
 
 
-def shortlisted(request):
 
-    c = request.GET.get('page', 1)
-    jobids=CreateNewJobModel.objects.all().order_by('-id')
-    allshortlisted=ShortlistedCandiateModel.objects.all().order_by('-id')
-
-    paginator = Paginator(allshortlisted, 3)
-
-    try:
-        page = paginator.page(c)
-
-    except PageNotAnInteger:
-        page = paginator.page(1)
-    except EmptyPage:
-        page = paginator.page(paginator.num_pages)
-
-    if request.method == 'POST':
-        offline_form = ShortlistedCandidateDetailsForm(request.POST)
-        isDelete=False
-        try:
-            offlineid=request.POST.get("shortlistedid")
-            edit=offlineid.split('-')
-            if edit[0]=='delete':
-                ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0].delete()
-            elif edit[0]=='mail':
-                print(request.POST.get("fromaddress"))
-                print(request.POST.get("toaddress"))
-                print(request.POST.get("subject"))
-                print(request.POST.get("bodycontent"))
-
-                # mail
-                sendMail(request.POST.get("fromaddress"),request.POST.get("toaddress"),request.POST.get("subject"),request.POST.get("bodycontent"))
-
-
-            elif edit[0] == 'edit':
-                if offline_form.is_valid():
-                    offlinels=ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0]
-                    print(offlinels)
-                    offlinels.candiatename=request.POST.get("candiatename")
-                    offlinels.jobid=request.POST.get("jobid")
-                    offlinels.save()
-                    offlinels.save(update_fields=['candiatename'])
-                    offlinels.save(update_fields=['jobid'])
-        except:
-            pass
-
-        else:
-            print(offline_form.errors)
-    else:
-        offline_form = ShortlistedCandidateDetailsForm()
-
-    listjob=[]
-    for job in jobids:
-        print(job.jobid)
-
-        listjob.append(str(job.jobid))
-
-    print('-----')
-
-    print(type(listjob[2]))
-    print(type(listjob))
-
-    context={
-    'allshortlisted':allshortlisted,
-    'per':page,
-    'jobids':jobids,
-    'listjob':listjob
-
-    }
-    return render(request, 'hrpanel/shortlisted.html',context)
 
 
 def sendMail(fromaddr,toaddr,subject,content):
@@ -735,3 +666,70 @@ def sendMail(fromaddr,toaddr,subject,content):
     s.quit()
 
     print('mail sent')
+
+
+def shortlisted(request):
+
+    c = request.GET.get('page', 1)
+    jobids=CreateNewJobModel.objects.all().order_by('-id')
+    allshortlisted=ShortlistedCandiateModel.objects.all().order_by('-id')
+
+    paginator = Paginator(allshortlisted, 3)
+
+    try:
+        page = paginator.page(c)
+
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    if request.method == 'POST':
+        offline_form = ShortlistedCandidateDetailsForm(request.POST)
+        isDelete=False
+        try:
+            offlineid=request.POST.get("shortlistedid")
+            edit=offlineid.split('-')
+            if edit[0]=='delete':
+                ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0].delete()
+            elif edit[0]=='mail':
+                print(request.POST.get("fromaddress"))
+                print(request.POST.get("toaddress"))
+                print(request.POST.get("subject"))
+                print(request.POST.get("bodycontent"))
+
+                # mail
+                sendMail(request.POST.get("fromaddress"),request.POST.get("toaddress"),request.POST.get("subject"),request.POST.get("bodycontent"))
+
+
+            elif edit[0] == 'edit':
+                if offline_form.is_valid():
+                    offlinels=ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0]
+                    print(offlinels)
+                    offlinels.candiatename=request.POST.get("candiatename")
+                    offlinels.jobid=request.POST.get("jobid")
+                    offlinels.save()
+                    offlinels.save(update_fields=['candiatename'])
+                    offlinels.save(update_fields=['jobid'])
+        except:
+            pass
+
+        else:
+            print(offline_form.errors)
+    else:
+        offline_form = ShortlistedCandidateDetailsForm()
+
+    listjob=[]
+    for job in jobids:
+        listjob.append(str(job.jobid))
+
+
+
+    context={
+    'allshortlisted':allshortlisted,
+    'per':page,
+    'jobids':jobids,
+    'listjob':listjob
+
+    }
+    return render(request, 'hrpanel/shortlisted.html',context)

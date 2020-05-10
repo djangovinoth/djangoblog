@@ -1,6 +1,8 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% load static %}
+
 <div class="content-section">
 <fieldset class="form-group">
 
@@ -36,8 +38,23 @@
             </td>
 
 <td>
-  <input type="text" id="demo"/>
 
+
+  <form method="post">
+        {% csrf_token %}
+  <input type="text" id="demo" class="demotime"/>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-none">
+
+    <input type="hidden" id="shortlistedid" name="shortlistedid" value="schdule-{{sc.id}}-{{sc.user.username}}-{{sc.candiatename}}-{{sc.candiatename}}">
+
+   <input  name="{{sc.id}}" id={{sc.id}} type="checkbox"  onChange="this.form.submit()" /><i class="fa fa-calendar" style="font-size:25px;color:teal"></i>
+
+  </label>
+  </div>
+
+
+</form>
 </td>
 
         <td>{{sc.createddate}}</td>
@@ -48,7 +65,10 @@
 
 </td>
 <td>  <a data-toggle="modal" href="#" data-target="#myModalmail{{sc.jobid}}"><i class="fa fa-envelope" style="font-size:25px;color:space"></i></a>
+
+
 </td>
+
 
 
 
@@ -303,10 +323,18 @@
 {% endblock content %}
 
 {%block script%}
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/jquery.datetimepicker.css' %}">
+
+
+  <script src="{% static 'blog/jquery.datetimepicker.js'%}"></script>
+    <script src="{% static 'blog/jquery.datetimepicker.full.js'%}"></script>
   <script>
   $( function() {
 
@@ -318,4 +346,13 @@
     });
   } );
   </script>
+
+  <script>
+
+  $('.demotime').datetimepicker({
+  inline:false,
+  });
+  </script>
+
+
 {%endblock%}
