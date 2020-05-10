@@ -26,12 +26,14 @@
       {%for sc in per%}
 
   <tr>
+    <form method="post">
+          {% csrf_token %}
     <td>{{sc.user}}</td>
     <td>{{sc.candiatename}}</td>
       <td>
         <div class="ui-widget">
 
-          <input id="tags" class='autocomplete_input'>
+          <input id="jobid" name="jobid" class='autocomplete_input' value="{{sc.jobid}}">
         </div>
 
 
@@ -39,23 +41,21 @@
 
 <td>
 
+  <input  id="scheduleddate" class="demotime" name="scheduleddate" value="" >
 
-  <form method="post">
-        {% csrf_token %}
-  <input type="text" id="demo" class="demotime"/>
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
   <label class="btn btn-none">
-
-    <input type="hidden" id="shortlistedid" name="shortlistedid" value="schdule-{{sc.id}}-{{sc.user.username}}-{{sc.candiatename}}-{{sc.candiatename}}">
-
    <input  name="{{sc.id}}" id={{sc.id}} type="checkbox"  onChange="this.form.submit()" /><i class="fa fa-calendar" style="font-size:25px;color:teal"></i>
 
   </label>
   </div>
+  </>
 
 
-</form>
+
+
 </td>
+<input type="hidden" id="shortlistedid" name="shortlistedid" value="schdule-{{sc.jobid}}-{{sc.user.username}}-{{sc.candiatename}}-{{sc.id}}">
 
         <td>{{sc.createddate}}</td>
 <td><a data-toggle="modal" href="#" data-target="#myModalView{{sc.jobid}}"><i class="fa fa-eye" style="font-size:25px;color:green"></i></a>
@@ -69,8 +69,7 @@
 
 </td>
 
-
-
+</form>
 
 <!-- view models for short listed candiatename -->
 

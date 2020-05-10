@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from users.models import PermissionModel,Profile,EdudetailsModel,CompanyDetailsModel,PersonalDetailsModel,SkillSetDetailsModel
-from .models import ShortlistedCandiateModel,CreateNewJobModel,TechnicalTeamModel,OfflineCandiateModel
+from .models import ShortlistedCandiateModel,CreateNewJobModel,TechnicalTeamModel,OfflineCandiateModel,ScheduledCandiateModel
 from django.contrib.auth.models import User
 from .forms import ShortlistedCandidateDetailsForm,CreateNewJobForm,TechnicalTeamForm,OfflineCandiateForm
 # Create your views here.
@@ -686,6 +686,7 @@ def shortlisted(request):
 
     if request.method == 'POST':
         offline_form = ShortlistedCandidateDetailsForm(request.POST)
+        print(offline_form)
         isDelete=False
         try:
             offlineid=request.POST.get("shortlistedid")
@@ -693,16 +694,27 @@ def shortlisted(request):
             if edit[0]=='delete':
                 ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0].delete()
             elif edit[0]=='mail':
-                print(request.POST.get("fromaddress"))
-                print(request.POST.get("toaddress"))
-                print(request.POST.get("subject"))
-                print(request.POST.get("bodycontent"))
-
                 # mail
                 sendMail(request.POST.get("fromaddress"),request.POST.get("toaddress"),request.POST.get("subject"),request.POST.get("bodycontent"))
+            elif edit[0]=='schdule':
+                scheduleddate =request.POST.get("scheduleddate")
+                jobid = request.POST.get("jobid")
+                print(jobid)
+                print(scheduleddate)
+                t=ScheduledCandiateModel(user=request.user,jobid=jobid,scheduleddate=scheduleddate,candidatename=edit[3],
+                candidatephone='11122',candidateemailid="tempinsert@mail.com")
+                t.save()
+
+
+
+
+
+                ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0].delete()
+                messages.success(request, f'Your id deleted')
 
 
             elif edit[0] == 'edit':
+                print("yes am caled")
                 if offline_form.is_valid():
                     offlinels=ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0]
                     print(offlinels)
@@ -712,6 +724,7 @@ def shortlisted(request):
                     offlinels.save(update_fields=['candiatename'])
                     offlinels.save(update_fields=['jobid'])
         except:
+            print("mmm")
             pass
 
         else:
