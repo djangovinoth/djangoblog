@@ -8,6 +8,15 @@ from crispy_forms.layout import Submit, Layout, Div, Fieldset
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 from .models import CreateNewJobModel
+# from dal import autocomplete
+
+#
+# class ShortListedCandiateForm(forms.Form):
+#     candiatename = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'offlinecandiate','class': "form-control",'placeholder': 'offlinecandiate'}))
+#     jobid = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'uploadresume','class': "form-control",'placeholder': 'uploadresume'}))
+#     createddate = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'phonenumber','class': "form-control",'placeholder': 'phonenumber'}))
+#     updateddate = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'candiateemailid','class': "form-control",'placeholder': 'candiateemailid'}))
+
 
 class OfflineCandiateForm(forms.Form):
     offlinecandiate = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'offlinecandiate','class': "form-control",'placeholder': 'offlinecandiate'}))
@@ -23,12 +32,21 @@ class TechnicalTeamForm(forms.Form):
     currentdesignation = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'currentdesignation','class': "form-control",'placeholder': 'currentdesignation'}))
 
 
+#
+# class ShortlistedCandidateDetailsForm(forms.Form):
+#
+#     candiatename = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'candiatename','class': "form-control",'placeholder': 'Company name'}))
+#
+#     jobid = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'jobid','class': "form-control",'placeholder': 'exprience'}))
+#
+
 
 class ShortlistedCandidateDetailsForm(forms.Form):
 
     candiatename = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'candiatename','class': "form-control",'placeholder': 'Company name'}))
 
-    jobid = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'name':'jobid','class': "form-control",'placeholder': 'exprience'}))
+    jobid = forms.CharField(max_length=100,widget=forms.Select(attrs={'name':'jobid','class': "form-control",'placeholder': 'exprience'}))
+
 
 
 

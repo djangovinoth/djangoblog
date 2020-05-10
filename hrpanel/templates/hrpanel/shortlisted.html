@@ -4,6 +4,8 @@
 <div class="content-section">
 <fieldset class="form-group">
 
+
+
   <!-- <legend class="border-bottom mb-4">School Details</legend> -->
   <h5 style="text-align:center">Short Listed </h5>
 
@@ -12,7 +14,10 @@
         <th>Shortlisted By</th>
         <th>Shortlisted Candiate</th>
         <th>Jobid</th>
+        <th>Scheduled Date</th>
         <th>Created Date</th>
+          <th>View/Edit/Delete</th>
+          <th>Send Mail</th>
 
         <th></th>
       </thead>
@@ -21,9 +26,250 @@
   <tr>
     <td>{{sc.user}}</td>
     <td>{{sc.candiatename}}</td>
-      <td>{{sc.jobid}}</td>
+      <td>
+        <div class="ui-widget">
+
+          <input id="tags" class='autocomplete_input'>
+        </div>
+
+
+            </td>
+
+<td>
+  <input type="text" id="demo"/>
+
+</td>
+
         <td>{{sc.createddate}}</td>
-            </tr>
+<td><a data-toggle="modal" href="#" data-target="#myModalView{{sc.jobid}}"><i class="fa fa-eye" style="font-size:25px;color:green"></i></a>
+  <a   data-toggle="modal" href="#" data-target="#myModaledit{{sc.jobid}}"><i class="fa fa-edit" style="font-size:25px"></i></a>
+
+  <a data-toggle="modal" href="#" data-target="#myModaldelete{{sc.jobid}}"><i class="fa fa-trash-o" style="font-size:25px;color:red"></i></a>
+
+</td>
+<td>  <a data-toggle="modal" href="#" data-target="#myModalmail{{sc.jobid}}"><i class="fa fa-envelope" style="font-size:25px;color:space"></i></a>
+</td>
+
+
+
+<!-- view models for short listed candiatename -->
+
+<div class="modal" id="myModalView{{sc.jobid}}">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">{{sc.user}}-{{sc.candiatename}}-{{sc.jobid}}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="form-row">
+              <div class="col-md-3 mb-3">
+                Short Listed By :
+              </div>
+
+                  <div class="col-md-3 mb-3">
+          <input type="hidden" name="technicalid" value="view-{{sc.id}}">
+          {{sc.user}}
+              </div>
+              <div class="col-md-3 mb-3">
+                Candiate Name :
+              </div>
+                        <div class="col-md-3 mb-3">
+          {{sc.candiatename}}
+              </div>
+              <div class="col-md-3 mb-3">
+                Job Id :
+              </div>
+                    <div class="col-md-3 mb-3">
+{{sc.jobid}}
+              </div>
+              <div class="col-md-3 mb-3">
+                Created Date :
+              </div>
+                    <div class="col-md-3 mb-3">
+{{sc.createddate}}
+              </div>
+        </div>
+      </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<!-- edit short listed candate name -->
+  <div class="modal" id="myModaledit{{sc.jobid}}">
+      <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+          <form method="post">
+                {% csrf_token %}
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">{{sc.user}}-{{sc.candiatename}}-{{sc.jobid}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+              <div class="form-row">
+
+
+
+                <div class="col-md-3 mb-3">
+                  Candiate Name :
+                </div>
+                          <div class="col-md-3 mb-3">
+              <input type="hidden" name="shortlistedid" value="edit-{{sc.jobid}}">
+            <input type="text" class="form-control" name="candiatename" value="{{sc.candiatename}}">
+                </div>
+                <div class="col-md-3 mb-3">
+                  Job Id :
+                </div>
+                      <div class="col-md-3 mb-3">
+            <input type="text" class="form-control" name="jobid" value="{{sc.jobid}}">
+                </div>
+
+          </div>
+        </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" onclick="this.form.submit()">Update</button>
+
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+<!-- delete short listed candiate name -->
+
+    <div class="modal" id="myModaldelete{{sc.jobid}}">
+      <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+          <form method="post">
+                {% csrf_token %}
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Are you sure you want delet this {{sc.candiatename}}-{{sc.jobid}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+              <div class="form-row">
+                <div class="col-md-3 mb-3">
+                  Candiate Name :
+                </div>
+                          <div class="col-md-3 mb-3">
+              <input type="hidden" name="shortlistedid" value="delete-{{sc.jobid}}">
+          {{sc.candiatename}}
+                </div>
+                <div class="col-md-3 mb-3">
+                  Job Id :
+                </div>
+                      <div class="col-md-3 mb-3">
+        {{sc.jobid}}
+                </div>
+
+          </div>
+        </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" onclick="this.form.submit()">Delete</button>
+
+          </div>
+          </form>
+        </div>
+      </div>
+      </div>
+
+      <!-- Send mail div -->
+
+      <div class="modal" id="myModalmail{{sc.jobid}}">
+          <div class="modal-dialog modal-lg" >
+            <div class="modal-content">
+              <form method="post">
+                    {% csrf_token %}
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Send mail to {{sc.user}}-{{sc.candiatename}}-{{sc.jobid}}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">
+                  <div class="form-row">
+
+
+
+                    <div class="col-md-3 mb-3">
+                      From address :
+                    </div>
+                              <div class="col-md-3 mb-3">
+                  <input type="hidden" name="shortlistedid" value="edit-{{sc.jobid}}">
+                <input type="text" class="form-control" name="fromaddress" value="{{sc.candiatename}}">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      To address :
+                    </div>
+                          <div class="col-md-3 mb-3">
+                <input type="text" class="form-control" name="toaddress" value="{{sc.jobid}}">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      Subject :
+                    </div>
+                          <div class="col-md-3 mb-3">
+                <input type="text" class="form-control" name="subject" value="{{sc.jobid}}">
+                    </div>
+
+
+                    <div class="col-md-3 mb-3">
+                      Body Content :
+                    </div>
+                          <div class="col-md-3 mb-3">
+                <input type="text" class="form-control" name="bodycontent" value="{{sc.jobid}}">
+                    </div>
+
+              </div>
+            </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="this.form.submit()">Send</button>
+
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+
+</tr>
+
+
       {%endfor%}
 
     </table>
@@ -55,3 +301,21 @@
     {% endif %}
 
 {% endblock content %}
+
+{%block script%}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+
+    var availableTags ={{listjob|safe}};
+
+
+    $( ".autocomplete_input" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+{%endblock%}

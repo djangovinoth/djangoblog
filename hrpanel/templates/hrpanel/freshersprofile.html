@@ -32,6 +32,7 @@
                     <th>Current Location</th>
                     <th>Schduled Date</th>
                       <th>Job Id</th>
+                        <th>View Details</th>
 
 
 
@@ -56,9 +57,12 @@
 <td>Current Location</td>
 <td>Schduled Date</td>
 <td> <input name="jobid{{u.id}}" id="jobid{{u.id}}" type="text"  value=""/></td>
-<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{u.id}}">
+<td>
+
+  <a data-toggle="modal"  href="#" data-toggle="modal" data-target="#myModal{{u.id}}" ><i class="fa fa-eye" style="font-size:25px;color:green"></i></a>
+  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{u.id}}">
     Open modal
-  </button>
+  </button> -->
 </td>
 
 <div class="modal" id="myModal{{u.id}}">

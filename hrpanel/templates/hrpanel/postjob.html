@@ -7,7 +7,7 @@
   <!-- <legend class="border-bottom mb-4">School Details</legend> -->
   <h5 style="text-align:center">Post a Job </h5>
 
-    <table class="blueTable">
+    <table class="table table-striped" >
       <thead>
         <th>Created By</th>
         <th>Jobid</th>
@@ -15,7 +15,7 @@
         <th>Contract</th>
         <th>Skills</th>
 
-        <th>Edit/Delete</th>
+        <th>View/Edit/Delete</th>
 
       </thead>
       {%for postjob in per%}
@@ -26,8 +26,72 @@
       <td>{{postjob.domain}}</td>
         <td>{{postjob.contractjob}}</td>
           <td>{{postjob.mandatoryskils}}</td>
-          <td><a href="#"> Edit </a><a href="#"> Delete </a></td>
-            </tr>
+          <td><a href="{%url 'hrpanel-viewcreatenewjob' postjob.jobid%}"><i class="fa fa-eye" style="font-size:25px;color:green"></i></a>
+            <a   href="{%url 'hrpanel-updatecreatenewjob' postjob.jobid%}"><i class="fa fa-edit" style="font-size:25px"></i></a>
+
+            <a data-toggle="modal" href="#" data-target="#myModaldelete{{postjob.jobid}}"><i class="fa fa-trash-o" style="font-size:25px;color:red"></i></a></td>
+
+            <div class="modal" id="myModaldelete{{postjob.jobid}}">
+                <div class="modal-dialog modal-lg" >
+                  <div class="modal-content">
+                    <form method="post">
+                          {% csrf_token %}
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Confirm Delete This  Below Record</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-row">
+                          <div class="col-md-3 mb-3">
+                            User Name :
+                          </div>
+
+                              <div class="col-md-3 mb-3">
+                      <input type="hidden" name="postjobid" value="delete-{{postjob.jobid}}">
+                      {{postjob.user}}
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            Domain Name :
+                          </div>
+                                    <div class="col-md-3 mb-3">
+{{postjob.domain}}
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            Contract Job :
+                          </div>
+                                <div class="col-md-3 mb-3">
+{{postjob.contractjob}}
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            Mandatory Skils :
+                          </div>
+                                <div class="col-md-3 mb-3">
+{{postjob.mandatoryskils}}
+                          </div>
+                    </div>
+                  </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger" onclick="this.form.submit()">Delete</button>
+
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+</tr>
+
+
+
+
       {%endfor%}
 
     </table>

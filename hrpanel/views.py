@@ -4,6 +4,13 @@ from .models import ShortlistedCandiateModel,CreateNewJobModel,TechnicalTeamMode
 from django.contrib.auth.models import User
 from .forms import ShortlistedCandidateDetailsForm,CreateNewJobForm,TechnicalTeamForm,OfflineCandiateForm
 # Create your views here.
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
+
 import os
 from django.shortcuts import get_list_or_404, get_object_or_404
 
@@ -271,8 +278,11 @@ def createnewjob(request):
 
 @login_required
 def viewcreatenewjob(request,jobid):
+    print('------Called')
+    print(type(jobid))
 
     lastjobid=CreateNewJobModel.objects.filter(jobid=jobid)[0]
+    print('-------->>>>-<<<<<')
     print(lastjobid)
     context={
     'lastjobid':lastjobid
@@ -283,7 +293,7 @@ def viewcreatenewjob(request,jobid):
 def updatecreatenewjob(request, jobid):
 
     jobset=CreateNewJobModel.objects.filter(jobid=jobid)
-    jobls=CreateNewJobModel.objects.get(jobid=jobid)
+    jobls=CreateNewJobModel.objects.filter(jobid=jobid)[0]
 
     print(jobset)
     print(jobls)
@@ -369,56 +379,6 @@ def mail(request):
     return render(request, 'hrpanel/mail.html')
 
 
-
-def postjob(request):
-    c = request.GET.get('page', 1)
-    allcreatedjob=CreateNewJobModel.objects.filter(user=request.user).order_by('-id')
-
-    paginator = Paginator(allcreatedjob, 3)
-
-    try:
-        page = paginator.page(c)
-
-    except PageNotAnInteger:
-        page = paginator.page(1)
-    except EmptyPage:
-        page = paginator.page(paginator.num_pages)
-
-    context={
-    'allcreatedjob':allcreatedjob,
-    'per':page,
-
-    }
-
-    return render(request, 'hrpanel/postjob.html',context)
-
-
-
-
-def shortlisted(request):
-
-
-
-    c = request.GET.get('page', 1)
-    allshortlisted=ShortlistedCandiateModel.objects.all()
-
-    paginator = Paginator(allshortlisted, 3)
-
-    try:
-        page = paginator.page(c)
-
-    except PageNotAnInteger:
-        page = paginator.page(1)
-    except EmptyPage:
-        page = paginator.page(paginator.num_pages)
-
-    context={
-    'allshortlisted':allshortlisted,
-    'per':page,
-
-    }
-    return render(request, 'hrpanel/shortlisted.html',context)
-
 def post(request):
     context={
     'posts':CreateNewJobModel.objects.all()
@@ -500,25 +460,43 @@ def addtechnicalteam(request):
     except EmptyPage:
         page = paginator.page(paginator.num_pages)
 
-
-
-
     if request.method == 'POST':
 
         techincalteam_form = TechnicalTeamForm(request.POST)
         if techincalteam_form.is_valid():
+            isSave=False
+            try:
+                technicalid=request.POST.get("technicalid")
+                edit=technicalid.split('-')
+                if edit[0] == 'edit':
+                    offlinels=TechnicalTeamModel.objects.get(id=edit[1])
+                    print(offlinels)
+                    offlinels.empname=request.POST.get("empname")
+                    offlinels.phonenumber=request.POST.get("phonenumber")
+                    offlinels.empid=request.POST.get("empid")
+                    offlinels.currentdesignation=request.POST.get("currentdesignation")
+                    offlinels.save()
+                    offlinels.save(update_fields=['empname'])
+                    offlinels.save(update_fields=['phonenumber'])
+                    offlinels.save(update_fields=['empid'])
+                    offlinels.save(update_fields=['currentdesignation'])
+                elif edit[0] == 'delete':
+                    TechnicalTeamModel.objects.get(id=edit[1]).delete()
+            except:
+                isSave=True
 
-            empname=techincalteam_form.cleaned_data["empname"]
-            phonenumber = techincalteam_form.cleaned_data["phonenumber"]
-            empid = techincalteam_form.cleaned_data["empid"]
-            currentdesignation = techincalteam_form.cleaned_data["currentdesignation"]
-            print(empname)
-            t=TechnicalTeamModel(user=request.user,
-            empname=empname,phonenumber=phonenumber,empid=empid,
-            currentdesignation=currentdesignation)
-            t.save()
-            messages.success(request, f'Your new job id is generated!')
-            return redirect('hrpanel-addtechnicalteam')
+                # Update data in Db
+            if isSave:
+                empname=techincalteam_form.cleaned_data["empname"]
+                phonenumber = techincalteam_form.cleaned_data["phonenumber"]
+                empid = techincalteam_form.cleaned_data["empid"]
+                currentdesignation = techincalteam_form.cleaned_data["currentdesignation"]
+                t=TechnicalTeamModel(user=request.user,
+                empname=empname,phonenumber=phonenumber,empid=empid,
+                currentdesignation=currentdesignation)
+                t.save()
+                messages.success(request, f'{empname} is added success fully !')
+
         else:
             print(techincalteam_form.errors)
     else:
@@ -578,12 +556,12 @@ def offlineuser(request):
                 candiateemailid=candiateemailid)
                 t.save()
                 messages.success(request, f'Off line candate {offlinecandiate} is added success fully !')
+
                 # return redirect('hrpanel-offlineuser')
         else:
             print(offline_form.errors)
     else:
         offline_form = OfflineCandiateForm()
-
 
     context={
     'offline_form':offline_form,
@@ -591,3 +569,169 @@ def offlineuser(request):
     }
 
     return render(request, 'hrpanel/offlineuser.html',context)
+
+
+
+def postjob(request):
+    c = request.GET.get('page', 1)
+    allcreatedjob=CreateNewJobModel.objects.filter(user=request.user).order_by('-id')
+
+    paginator = Paginator(allcreatedjob, 3)
+
+    try:
+        page = paginator.page(c)
+
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+
+    try:
+        offlineid=request.POST.get("postjobid")
+        edit=offlineid.split('-')
+        if edit[0] == 'delete':
+            CreateNewJobModel.objects.filter(jobid=edit[1]).delete()
+            messages.success(request, f'Off line candate {edit[1]} is deleted success fully !')
+
+    except:
+        pass
+
+    context={
+    'allcreatedjob':allcreatedjob,
+    'per':page,
+
+    }
+
+    return render(request, 'hrpanel/postjob.html',context)
+
+
+def shortlisted(request):
+
+    c = request.GET.get('page', 1)
+    jobids=CreateNewJobModel.objects.all().order_by('-id')
+    allshortlisted=ShortlistedCandiateModel.objects.all().order_by('-id')
+
+    paginator = Paginator(allshortlisted, 3)
+
+    try:
+        page = paginator.page(c)
+
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    if request.method == 'POST':
+        offline_form = ShortlistedCandidateDetailsForm(request.POST)
+        isDelete=False
+        try:
+            offlineid=request.POST.get("shortlistedid")
+            edit=offlineid.split('-')
+            if edit[0]=='delete':
+                ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0].delete()
+            elif edit[0]=='mail':
+                print(request.POST.get("fromaddress"))
+                print(request.POST.get("toaddress"))
+                print(request.POST.get("subject"))
+                print(request.POST.get("bodycontent"))
+
+                # mail
+                sendMail(request.POST.get("fromaddress"),request.POST.get("toaddress"),request.POST.get("subject"),request.POST.get("bodycontent"))
+
+
+            elif edit[0] == 'edit':
+                if offline_form.is_valid():
+                    offlinels=ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0]
+                    print(offlinels)
+                    offlinels.candiatename=request.POST.get("candiatename")
+                    offlinels.jobid=request.POST.get("jobid")
+                    offlinels.save()
+                    offlinels.save(update_fields=['candiatename'])
+                    offlinels.save(update_fields=['jobid'])
+        except:
+            pass
+
+        else:
+            print(offline_form.errors)
+    else:
+        offline_form = ShortlistedCandidateDetailsForm()
+
+    listjob=[]
+    for job in jobids:
+        print(job.jobid)
+
+        listjob.append(str(job.jobid))
+
+    print('-----')
+
+    print(type(listjob[2]))
+    print(type(listjob))
+
+    context={
+    'allshortlisted':allshortlisted,
+    'per':page,
+    'jobids':jobids,
+    'listjob':listjob
+
+    }
+    return render(request, 'hrpanel/shortlisted.html',context)
+
+
+def sendMail(fromaddr,toaddr,subject,content):
+
+    # instance of MIMEMultipart
+    msg = MIMEMultipart()
+
+    # storing the senders email address
+    msg['From'] = fromaddr
+
+    # storing the receivers email address
+    msg['To'] = toaddr
+
+    # storing the subject
+    msg['Subject'] = subject
+
+    # string to store the body of the mail
+    body = content
+
+    # attach the body with the msg instance
+    msg.attach(MIMEText(body, 'plain'))
+
+    # open the file to be sent
+    filename = "Guru7.pdf"
+    attachment = open("/Users/e11/Desktop/Guru7.pdf", "rb")
+
+    # instance of MIMEBase and named as p
+    p = MIMEBase('application', 'octet-stream')
+
+    # To change the payload into encoded form
+    p.set_payload((attachment).read())
+
+    # encode into base64
+    encoders.encode_base64(p)
+
+    p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+
+    # attach the instance 'p' to instance 'msg'
+    msg.attach(p)
+
+    # creates SMTP session
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+
+    # start TLS for security
+    s.starttls()
+
+    # Authentication
+    s.login(fromaddr, "vsivan333")
+
+    # Converts the Multipart msg into a string
+    text = msg.as_string()
+
+    # sending the mail
+    s.sendmail(fromaddr, toaddr, text)
+
+    # terminating the session
+    s.quit()
+
+    print('mail sent')
