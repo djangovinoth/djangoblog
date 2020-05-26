@@ -1,0 +1,51 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Create Company Code</legend>
+                <div class="row">
+    <div class="col-6">
+      {{ c_form.companyname|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ c_form.mobile|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ c_form.landline|as_crispy_field }}
+    </div>
+
+    <div class="col-6">
+      {{ c_form.location|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ c_form.companyprofile|as_crispy_field }}
+    </div>
+
+    <div class="col-6">
+      {{ c_form.tin|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ c_form.address|as_crispy_field }}
+    </div>
+
+
+
+  </div>
+
+
+
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info btn-sm mt-1 mb-1" type="submit">Create</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}

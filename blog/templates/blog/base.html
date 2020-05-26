@@ -57,8 +57,11 @@
                 <a class="nav-item nav-link" href="#">Welcome, {{request.user}}</a>
                     </div>
               {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                <!-- <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a> -->
+                <a class="nav-item nav-link"  href="{% url 'employeelogin' %}">Employee Login</a>
+            <a class="nav-item nav-link" href="{% url 'employerlogin' %}">Recruiter Login</a>
+            <a class="nav-item nav-link" data-toggle="modal" data-target="#regModal"> Register</a>
               {% endif %}
             </div>
           </div>
@@ -66,9 +69,129 @@
       </nav>
     </header>
 
+    <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
 
-    <main role="main" class="container ">
+            <div class="content-section" style="text-align:center">
+              <fieldset class="form-group">
+                <legend class="border-bottom mb-4">You wanna to Register as employee or Recruiter</legend>
+                <div class="row">
+                  <div class="col-6" style="text-align:center">
+
+                    <a href="{% url 'employeeregister' %}">
+                      <small >Register as employee</small>
+
+                    </a>
+                  </div>
+
+                  <div class="col-6" style="text-align:center" >
+
+                    <a href="{% url 'hrregister' %}">
+                                        <small>Register as Recruiter</small>
+                    </a>
+                  </div>
+
+                </div>
+
+
+                <div class="row">
+                  <div class="col-6" style="text-align:center">
+
+                    <a href="{% url 'employeeregister' %}">
+
+                      <img src="{%static 'blog/fresher.png'%}" alt="fresher" style="width:180px;height:180px;border:0">
+                    </a>
+                  </div>
+
+                  <div class="col-6" style="text-align:center">
+                    <a href="{% url 'hrregister' %}">
+                                        <img src="{%static 'blog/hr.png'%}" alt="hr" style="width:180px;height:180px;border:0">
+                    </a>
+                  </div>
+
+                </div>
+
+
+              </fieldset>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    <main role="main" class="container col-md-12 ">
       <div class="row ">
+        {% if user.is_authenticated %}
+        <div class="col-md-1.8  p-3">
+
+          <div class="content-section">
+
+            <div class="media" >
+              <div class="media-body">
+                <img class="rounded-circle account-img" src="{{ user.permission.image.url }}" style="width: 80px;height: 80px;">
+                <br>
+                <small class="text-secondary">Last Login:-    {{user.last_login}}</small>
+                <br>
+                <small class="text-secondary">Profile Perentage - 90%</small>
+                <br>
+              </div>
+
+            </div>
+
+
+
+            <ul class="list-group mt-4">
+              <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-mail' %}"><small>Inbox</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'profile' %}"><small>Update Basic Details</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'employeeAddEdudetails' %}"><small>Education Details</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addpersonaldetails' %}"><small>Personal Details</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addcompanyView' %}"><small>Company Details</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addskillsset' %}"><small>SkillSet Details</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addskillsset' %}"><small>Job Postings</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addskillsset' %}"><small>Interview Discussion Forum</small></a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'technical-home' %}"><small>Technical Discussion Forum</small></a></li>
+
+            </ul>
+            </p>
+
+          </div>
+        </div>
+
+        {%else %}
+        <div class="col-md-1.8  p-3">
+
+          <div class="content-section">
+
+            <!-- <div class="media" >
+              <div class="media-body">
+                <img class="rounded-circle account-img" src="{{ user.permission.image.url }}" style="width: 80px;height: 80px;">
+                <br>
+                <small>Last Login:- {{user.last_login}}</small>
+              </div>
+            </div> -->
+
+
+
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-mail' %}">Temp links need to be add</a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'profile' %}">Temp links need to be add</a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'employeeAddEdudetails' %}">Temp links need to be add</a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addpersonaldetails' %}">Temp links need to be add</a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addcompanyView' %}">Temp links need to be add</a></li>
+              <li class="list-group-item list-group-item-light"><a href="{% url 'addskillsset' %}">Temp links need to be add</a></li>
+
+            </ul>
+            </p>
+
+          </div>
+        </div>
+
+      {%endif%}
         <div class="col-md-8" align="left">
           {% if messages %}
             {% for message in messages %}
@@ -83,13 +206,13 @@
           <!-- <div class="content-section"> -->
             <!-- <h3>Our Sidebar</h3> -->
             <!-- <p class='text-muted'>You can put any information here you'd like. -->
-              <ul class="list-group">
+              <!-- <ul class="list-group">
                 <li class="list-group-item list-group-item-light">Latest Posts</li>
                 <li class="list-group-item list-group-item-light">Announcements</li>
                 <li class="list-group-item list-group-item-light">Calendars</li>
                 <li class="list-group-item list-group-item-light">etc</li>
-              </ul>
-            </p>
+              </ul> -->
+            <!-- </p> -->
           <!-- </div> -->
         </div>
       </div>

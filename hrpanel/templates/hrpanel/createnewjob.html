@@ -1,7 +1,7 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">
+<div class="content-section border border-success">
 
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -108,7 +108,7 @@
               No
             </label>
           </div>
-          
+
         </div>
 
 
@@ -291,7 +291,7 @@
 
     <div class="form-group" align="right">
 
-      <button class="btn btn-outline-info" type="submit">Save & Continue</button>
+      <button class="btn btn-outline-info btn-sm mt-1 mb-1" type="submit">Save & Continue</button>
 
     </div>
   </form>

@@ -21,25 +21,37 @@ from django.conf.urls.static import static
 from users import views as user_views
 
 urlpatterns = [
+    path('edudetails/', user_views.edudetails, name='edudetails'),
+    path('edudetailsView/', user_views.edudetailsView, name='edudetailsView'),
+    path('updateedudetails/', user_views.updateedudetails, name='updateedudetails'),
+
     path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
-    path('edudetails/', user_views.edudetails, name='edudetails'),
     path('addcompanyView/', user_views.addcompanyView, name='addcompanyView'),
     path("deletecompany/<int:id>",user_views.deletecompany,name='deletecompany'),
     path("updatecompany/<int:id>",user_views.updatecompany,name='updatecompany'),
-    path('edudetailsView/', user_views.edudetailsView, name='edudetailsView'),
-    path('updateedudetails/', user_views.updateedudetails, name='updateedudetails'),
     path('addpersonaldetails/', user_views.addpersonaldetails, name='addpersonaldetails'),
     path('personaldetailsView/', user_views.personaldetailsView, name='personaldetailsView'),
     path('updatepersonaldetails/', user_views.updatepersonaldetails, name='updatepersonaldetails'),
-    path('addskillsset/', user_views.addskillsset, name='addskillsset'),
+    path('addskillsset', user_views.addskillsset, name='addskillsset'),
+    path('deleteskillset/<int:id>', user_views.deleteskillset, name='deleteskillset'),
+
+
     path('updateskillsset/<int:id>', user_views.updateskillsset, name='updateskillsset'),
 
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('employeelogin/', auth_views.LoginView.as_view(template_name='users/employeelogin.html'), name='employeelogin'),
+    path('employerlogin/', auth_views.LoginView.as_view(template_name='users/employerlogin.html'), name='employerlogin'),
+    path('employeeregister/', user_views.employeeregister, name='employeeregister'),
+    path('companycode/', user_views.companycode, name='companycode'),
+    path('hrregister/', user_views.hrregister, name='hrregister'),
+
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('', include('blog.urls')),
     path('', include('hrpanel.urls')),
+    path('', include('employee.urls')),
+    path('', include('forums.urls')),
 
 
 ]

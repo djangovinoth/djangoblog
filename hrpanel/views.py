@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from users.models import PermissionModel,Profile,EdudetailsModel,CompanyDetailsModel,PersonalDetailsModel,SkillSetDetailsModel
+from users.models import Permission,Profile,EdudetailsModel,CompanyDetailsModel,PersonalDetailsModel,SkillSetDetailsModel
 from .models import ShortlistedCandiateModel,CreateNewJobModel,TechnicalTeamModel,OfflineCandiateModel,ScheduledCandiateModel
 from django.contrib.auth.models import User
 from .forms import ShortlistedCandidateDetailsForm,CreateNewJobForm,TechnicalTeamForm,OfflineCandiateForm
@@ -20,7 +20,7 @@ from django.template import RequestContext
 
 from django.conf import settings
 from django.http import HttpResponse, Http404
-from users.models import PermissionModel
+from users.models import Permission
 from wsgiref.util import FileWrapper
 import mimetypes
 from django.contrib import messages
@@ -31,7 +31,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 
 
 def addfreshershortlist(request,id):
-    username=PermissionModel.objects.select_related('user').get(id=id)
+    username=Permission.objects.select_related('user').get(id=id)
 
     now = datetime.now()
     dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -49,7 +49,7 @@ def addfreshershortlist(request,id):
 
 
 def addfreshershortlist(request,id):
-    username=PermissionModel.objects.select_related('user').get(id=id)
+    username=Permission.objects.select_related('user').get(id=id)
 
     now = datetime.now()
     dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -68,13 +68,13 @@ def addfreshershortlist(request,id):
 
 def download(request,id):
 
-    file_name=PermissionModel.objects.get(id=id).resume
+    file_name=Permission.objects.get(id=id).resume
     file_path = settings.MEDIA_ROOT +'/'+ str(file_name)
     file_wrapper = FileWrapper(open(file_path,'rb'))
     file_mimetype = mimetypes.guess_type(file_path)
     response = HttpResponse(file_wrapper, content_type=file_mimetype )
     response['Content-Length'] = os.stat(file_path).st_size
-    response['Content-Disposition'] = 'attachment; filename=%s/' % smart_str(file_name)
+    response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
     response['X-Sendfile'] = smart_str(file_path)
 
     return response
@@ -94,7 +94,7 @@ def freshersprofile(request):
     # start Page nation
     users=User.objects.all()
     c = request.GET.get('page', 1)
-    per=PermissionModel.objects.select_related('user').all()
+    per=Permission.objects.select_related('user').all()
 
     paginator = Paginator(per, 3)
 
@@ -154,7 +154,7 @@ def freshersprofile(request):
 def experienceprofile(request):
     users=User.objects.all()
     c = request.GET.get('page', 1)
-    per=PermissionModel.objects.select_related('user').all()
+    per=Permission.objects.select_related('user').all()
 
     recordPerPage=3
     paginator = Paginator(per, recordPerPage)
@@ -212,8 +212,61 @@ def experienceprofile(request):
 
 def candidatetracker(request):
 
-    return render(request, 'hrpanel/candidatetracker.html')
+    c = request.GET.get('page', 1)
+    schudledcandidate=ScheduledCandiateModel.objects.filter(user=request.user).order_by('-id')
 
+    paginator = Paginator(schudledcandidate, 10)
+
+    try:
+        page = paginator.page(c)
+
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+
+    try:
+        offlineid=request.POST.get("postjobid")
+        edit=offlineid.split('-')
+        if edit[0] == 'delete':
+            ScheduledCandiateModel.objects.filter(jobid=edit[1]).delete()
+            messages.success(request, f'Off line candate {edit[1]} is deleted success fully !')
+
+    except:
+        pass
+
+    context={
+    'schudledcandidate':schudledcandidate,
+    'per':page,
+
+    }
+    return render(request, 'hrpanel/candidatescheduled.html',context)
+
+
+
+
+
+def candidaterescheduled(request):
+    return render(request, 'hrpanel/candidaterescheduled.html')
+
+def candiateinprogress(request):
+    return render(request, 'hrpanel/candiateinprogress.html')
+
+def candidatecompleted(request):
+    return render(request, 'hrpanel/candidatecompleted.html')
+
+def candidatehold(request):
+    return render(request, 'hrpanel/candidatehold.html')
+
+def candiateselected(request):
+    return render(request, 'hrpanel/candiateselected.html')
+
+def candidaterejected(request):
+    return render(request, 'hrpanel/candidaterejected.html')
+
+def candidateoffered(request):
+    return render(request, 'hrpanel/candidateoffered.html')
 
 
 
@@ -496,6 +549,7 @@ def addtechnicalteam(request):
                 currentdesignation=currentdesignation)
                 t.save()
                 messages.success(request, f'{empname} is added success fully !')
+                return redirect('hrpanel-addtechnicalteam')
 
         else:
             print(techincalteam_form.errors)
@@ -556,7 +610,7 @@ def offlineuser(request):
                 candiateemailid=candiateemailid)
                 t.save()
                 messages.success(request, f'Off line candate {offlinecandiate} is added success fully !')
-
+                return redirect('hrpanel-offlineuser')
                 # return redirect('hrpanel-offlineuser')
         else:
             print(offline_form.errors)
@@ -698,19 +752,17 @@ def shortlisted(request):
                 sendMail(request.POST.get("fromaddress"),request.POST.get("toaddress"),request.POST.get("subject"),request.POST.get("bodycontent"))
             elif edit[0]=='schdule':
                 scheduleddate =request.POST.get("scheduleddate")
+
                 jobid = request.POST.get("jobid")
-                print(jobid)
-                print(scheduleddate)
-                t=ScheduledCandiateModel(user=request.user,jobid=jobid,scheduleddate=scheduleddate,candidatename=edit[3],
-                candidatephone='11122',candidateemailid="tempinsert@mail.com")
-                t.save()
 
-
-
-
-
-                ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0].delete()
-                messages.success(request, f'Your id deleted')
+                if scheduleddate=="" or scheduleddate is None:
+                    messages.error(request, f'please select date')
+                else:
+                    t=ScheduledCandiateModel(user=request.user,jobid=jobid,scheduleddate=scheduleddate,candidatename=edit[3],
+                    candidatephone='11122',candidateemailid="tempinsert@mail.com")
+                    t.save()
+                    ShortlistedCandiateModel.objects.filter(jobid=edit[1])[0].delete()
+                    messages.success(request, f'Your id deleted')
 
 
             elif edit[0] == 'edit':

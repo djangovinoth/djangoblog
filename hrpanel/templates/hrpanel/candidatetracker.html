@@ -1,77 +1,80 @@
 {% extends "hrpanel/hrbase.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <div class="content-section">
-    <h5 style="text-align:center">Candiate Traker </h5>
+
+<div class="content-section border  mt-4" >
+<button class="btn btn-info btn-sm mt-1 mb-1" onclick="myFunction1()">View Candiate Details</button>
+<button class="btn btn-info btn-sm mt-1 mb-1" onclick="myFunction2()">View Hr Details</button>
 
 
-    <article class="media content-section">
-      <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"> -->
-      <div class="modal-content">
-        <div class="col-md-6 mb-3">
-<p>        Canidates Update:
-</p>                </div>
-                <div class="col-md-6 mb-3">
-                Canidates Update1
-                        </div>
-        </div>
-        <div class="modal-content">
-          <div class="col-md-6 mb-3">
-          <p>Hr Update: </p>
 
 
-                  </div>
-                  <div class="col-md-6 mb-3">
-                  Hr updates1
 
-
-                          </div>
-          </div>
-
-    </article>
-
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#scheduledcandiate" role="tab" aria-controls="pills-home" aria-selected="true">Scheduled </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " id="pills-home-tab" data-toggle="pill" href="#rescheduledcandiate" role="tab" aria-controls="pills-home" aria-selected="true">Rescheduled </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#inprogresscandiate" role="tab" aria-controls="pills-profile" aria-selected="false">Inprogress </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#completedcandiate" role="tab" aria-controls="pills-contact" aria-selected="false">Completed </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#holdcandiate" role="tab" aria-controls="pills-contact" aria-selected="false">Hold </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#selectedcandiate" role="tab" aria-controls="pills-contact" aria-selected="false">Selected </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#rejectedcandiate" role="tab" aria-controls="pills-contact" aria-selected="false">Rejected </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#offeredcandiate" role="tab" aria-controls="pills-contact" aria-selected="false">Offered </a>
-  </li>
-
-</ul>
-
-<div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="scheduledcandiate" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
-  <div class="tab-pane fade" id="rescheduledcandiate" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-  <div class="tab-pane fade" id="inprogresscandiate" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-  <div class="tab-pane fade" id="completedcandiate" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-    <div class="tab-pane fade" id="holdcandiate" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-      <div class="tab-pane fade" id="selectedcandiate" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-        <div class="tab-pane fade" id="rejectedcandiate" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-        <div class="tab-pane fade" id="offeredcandiate" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-
-</div>
 </div>
 
 
 
+<div class="content-section border ">
 
+
+
+
+
+
+
+    <a   class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candidatetracker'%}">Scheduled </a>
+
+    <a  class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candidaterescheduled'%}" >Rescheduled </a>
+
+    <a class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candiateinprogress'%}" >Inprogress </a>
+
+    <a  class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candidatecompleted'%}" >Completed </a>
+
+
+    <a class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candidatehold'%}" >Hold </a>
+
+
+    <a class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candiateselected'%}" >Selected </a>
+
+
+    <a  class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candidaterejected'%}" >Rejected </a>
+
+
+    <a class="btn btn-outline-info btn-sm mt-1 mb-1" role="button" href="{%url 'hrpanel-candidateoffered'%}" >Offered </a>
+
+
+
+
+
+
+
+{%block sh%}
+
+{%endblock%}
+
+
+
+</div>
 {% endblock content %}
+
+{%block script%}
+<script>
+function myFunction1() {
+  var x = document.getElementById("myDIV1");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function myFunction2() {
+  var x = document.getElementById("myDIV2");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+  {%endblock%}

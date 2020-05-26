@@ -1,37 +1,58 @@
 {% extends "hrpanel/hrbase.html" %}
 {% block content %}
-<div class="content-section">
+<div class="content-section" style='width: 50%'>
     {% for post in posts %}
 
-        <article class="media content-section">
+        <!-- <article class="media content-section" style="background-color: #d2fce9 "> -->
+            <article class="media content-section" style="background-color: #d2fce9 -webkit-box-shadow: 31px 22px 33px 5px rgba(0,0,0,0.69);
+-moz-box-shadow: 31px 22px 33px 5px rgba(0,0,0,0.69);
+box-shadow: 31px 22px 33px 5px rgba(0,0,0,0.69);">
           <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"> -->
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{%url 'user-posts' post.user.username%}">{{ post.user }}</a>
-              <small class="text-muted">{{ post.id}}</small>
+          <div class="media-body" >
+            <div class="article-metadata" style="background-color: lightblue; border-radius: 10px">
+              <a class="mr-2" href="{%url 'user-posts' post.user.username%}">Job Posted By :{{ post.user }}</a>
+              <small class="text-muted">Job Views : {{ post.id}}</small>
             </div>
-            <h2><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.jobtitle }}</a></h2>
-            <p class="article-content">{{ post.jobdescription }}</p>
+
+            <!-- <h2><a class="article-title" href="{%url 'post-detail' post.id%}">Job title : {{ post.jobtitle }}</a></h2> -->
+
+            <h4><a  href="{%url 'post-detail' post.id%}">Job title : {{ post.jobtitle }}</a></h4>
+            <p class="article-content">Job Descripton: {{ post.jobdescription }}</p>
+       </div>
+
+          <!-- <div class="col-sm-4">
+          <div class="card bg-light mb-4" style="max-width: 18rem;">
+
+          <div class="card-header"><a class="mr-2" href="{%url 'user-posts' post.user.username%}">{{ post.user }}</a></div>
+          <div class="card-body">
+            <h5 class="card-title"><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.jobtitle }}</a></h5>
+            <p class="card-text">{{ post.jobdescription }}</p>
           </div>
+          </div>
+
+
+          </div> -->
+
+
         </article>
     {% endfor %}
     {%if is_paginated%}
       {%if page_obj.has_previous %}
-      <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-      <a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+      <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page=1">First</a>
+      <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.previous_page_number}}">Previous</a>
       {%endif%}
     {%for num in page_obj.paginator.page_range%}
     {%if page_obj.number == num%}
-    <a class="btn btn-info mb-4" href="?page={{num}}">{{num}}</a>
+    <a class="btn btn-info mb-4 btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
     {%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'-3' %}
-    <a class="btn btn-outlineinfo mb-4" href="?page={{num}}">{{num}}</a>
+    <a class="btn btn-outlineinfo mb-4 btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
 
     {%endif%}
     {%endfor%}
 
     {%if page_obj.has_next %}
-    <a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">Next</a>
-    <a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+    <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.next_page_number}}">Next</a>
+    <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.paginator.num_pages}}">Last</a>
     {%endif%}
 
     {%endif%}

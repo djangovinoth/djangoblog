@@ -1,0 +1,54 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section col-md-8 ">
+        <form method="POST" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today as Recruiter</legend>
+                <div class="row">
+    <div class="col-6">
+      {{ u_form.username|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ u_form.email|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ u_form.password1|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ u_form.password2|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ h_form.recruiterpic|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ h_form.mobile|as_crispy_field }}
+    </div>
+
+    <div class="col-6">
+      {{ h_form.company|as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ h_form.code|as_crispy_field }}
+      <small class="form-text text-muted">Cant find company code <a href="{% url 'companycode' %}">Create Here</a></small>
+    </div>
+    <div class="col-6">
+      {{ h_form.location|as_crispy_field }}
+    </div>
+  </div>
+
+
+
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}

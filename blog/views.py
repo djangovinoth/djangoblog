@@ -1,21 +1,21 @@
 from django.shortcuts import render
 from .models import Post
-from users.models import PermissionModel
+from users.models import Permission
 
 
 def home(request):
     # context = {
     #     'posts': Post.objects.all()
     # }
-    per=PermissionModel.objects.get(user=request.user)
+    per=Permission.objects.get(user=request.user)
     print(per)
-    print(per.role)
+    print(per.Role)
     context={
     'per':per
     }
 
-    if(per.role=="Employer"):
-        return render(request, 'hrpanel/home.html', context)    
+    if(per.Role=="hr"):
+        return render(request, 'hrpanel/home.html', context)
 
     return render(request, 'blog/home.html', context)
 

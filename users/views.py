@@ -2,40 +2,157 @@ from django.shortcuts import render, redirect,reverse,render_to_response
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm,EduDetailsUpdateForm,CompanyDetailsUpdateForm,PersonalDetailsUpdateForm,SkillSetDetailsUpdateForm,PermissionForm
+from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,EduDetailsUpdateForm,
+                    CompanyDetailsUpdateForm,PersonalDetailsUpdateForm,SkillSetDetailsUpdateForm,
+                    PermissonForm,EmployeePermissonForm, HRPermissonForm,CompanyCodeForm)
 # ,ProfileResumeUpdateForm,ProfileImageUpdateForm,ProfilePhoneUpdateForm
-from .models import Profile,EdudetailsModel,CompanyDetailsModel,PersonalDetailsModel,SkillSetDetailsModel
+from .models import Profile,EdudetailsModel,CompanyDetailsModel,PersonalDetailsModel,SkillSetDetailsModel,Permission
+
+
+
+def register(request):
+    if request.method == 'POST':
+        u_form = UserRegisterForm(request.POST, request.user)
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,request.user)
+        if u_form.is_valid() and p_form.is_valid():
+            user = u_form.save()
+            p_form = p_form.save(commit=False)
+            p_form.user = user
+            p_form.save()
+            messages.success(request, f'Your account has been created! You are now able to log in')
+            return redirect('login')
+    else:
+        u_form = UserRegisterForm()
+        p_form = PermissonForm()
+
+    context={
+    'p_form':p_form,
+    'u_form':u_form,
+    }
+    return render(request, 'users/register.html', context)
+
+
+def employeeregister(request):
+    if request.method == 'POST':
+        u_form = UserRegisterForm(request.POST, request.user)
+        e_form = EmployeePermissonForm(request.POST,
+                                   request.FILES,request.user)
+
+        print("------------------------------")
+        print(e_form)
+        if u_form.is_valid() and e_form.is_valid():
+            user = u_form.save()
+            e_form = e_form.save(commit=False)
+            e_form.user = user
+            e_form.save()
+            messages.success(request, f'Your account has been created! You are now able to log in')
+            return redirect('employeelogin')
+        else:
+            print(u_form.errors)
+            print(e_form.errors)
+    else:
+        u_form = UserRegisterForm()
+        e_form = EmployeePermissonForm()
+
+
+    context={
+    'e_form':e_form,
+    'u_form':u_form,
+    }
+    return render(request, 'users/employeeregister.html', context)
+
+
+def hrregister(request):
+    if request.method == 'POST':
+        u_form = UserRegisterForm(request.POST, request.user)
+        h_form = HRPermissonForm(request.POST,
+                                   request.FILES,request.user)
+
+        print("----------------")
+        print(h_form)
+        if u_form.is_valid() and h_form.is_valid():
+            user = u_form.save()
+            h_form = h_form.save(commit=False)
+            h_form.user = user
+            h_form.save()
+            messages.success(request, f'Your account has been created! You are now able to log in')
+            return redirect('employerlogin')
+    else:
+        u_form = UserRegisterForm()
+        h_form = HRPermissonForm()
+
+    context={
+    'h_form':h_form,
+    'u_form':u_form,
+    }
+    return render(request, 'users/hrregister.html', context)
+
+
+
+def companycode(request):
+    if request.method == 'POST':
+        c_form = CompanyCodeForm(request.POST,
+                                   request.FILES,request.user)
+
+
+        if c_form.is_valid():
+            c_form.save()
+            messages.success(request, f'Your account has been created! You are now able to log in')
+            return redirect('hrregister')
+    else:
+        c_form = CompanyCodeForm()
+
+    context={
+    'c_form':c_form,
+    }
+
+    return render(request, 'users/companycode.html',context)
+
+
+
+
+
+
 
 
 
 @login_required
 def profile(request):
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = PermissionForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.permissionmodel)
-
-        if u_form.is_valid() and p_form.is_valid():
-            print(p_form)
-            user=u_form.save()
-            p_form.save()
-
-            messages.success(request, f'Your profile details have been updated!')
-            return redirect('edudetails')
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,instance=request.user.permission)
+        print(p_form)
+        if p_form.is_valid():
+            ls=Permission.objects.get(user=request.user)
+            update=True
+            try:
+                ls.image=request.FILES['image']
+            except:
+                update=False
 
 
+            ls.mobile=request.POST.get("mobile")
+            ls.save()
+            # Update data in Db
+            if update:
+                ls.save(update_fields=['image'])
+            else:
+                print('no file')
+            ls.save(update_fields=['mobile'])
+            messages.success(request, f'Your account has been created! You are now able to log in')
+            return redirect('profile')
+        else:
+            print(p_form.errors)
     else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = PermissionForm(instance=request.user.permissionmodel)
+        p_form = ProfileUpdateForm(instance=request.user.permission)
 
 
-    context = {
-        'u_form': u_form,
-        'p_form': p_form
-        }
+    context={
+    'p_form':p_form,
+    }
 
-    return render(request, 'users/profile.html', context)
+    return render(request, 'users/profile.html',context)
 
 # @login_required
 # def profile(request):
@@ -76,23 +193,23 @@ def profile(request):
 #     return render(request, 'users/register.html', {'form': form})
 
 
-def register(request):
-    if request.method == 'POST':
-        u_form = UserRegisterForm(request.POST)
-        p_form=PermissionForm(request.POST,request.FILES)
-        if u_form.is_valid() and p_form.is_valid():
-            user=u_form.save()
-            per=p_form.save(commit=False)
-            per.user=user
-            per.save()
-
-            username = u_form.cleaned_data.get('username')
-            messages.success(request, f'Your account has been created! You are now able to log in')
-            return redirect('login')
-    else:
-        u_form = UserRegisterForm()
-        p_form = PermissionForm()
-    return render(request, 'users/register.html', {'u_form': u_form,'p_form':p_form})
+# def register(request):
+#     if request.method == 'POST':
+#         u_form = UserRegisterForm(request.POST)
+#         p_form=PermissionForm(request.POST,request.FILES)
+#         if u_form.is_valid() and p_form.is_valid():
+#             user=u_form.save()
+#             per=p_form.save(commit=False)
+#             per.user=user
+#             per.save()
+#
+#             username = u_form.cleaned_data.get('username')
+#             messages.success(request, f'Your account has been created! You are now able to log in')
+#             return redirect('login')
+#     else:
+#         u_form = UserRegisterForm()
+#         p_form = PermissionForm()
+#     return render(request, 'users/register.html', {'u_form': u_form,'p_form':p_form})
 
 
 
@@ -107,6 +224,18 @@ def deletecompany(request, id):
 
 
     return render(request, 'users/addcompanyView.html',{'companyset':companyset})
+
+@login_required
+def deleteskillset(request, id):
+    companyset=SkillSetDetailsModel.objects.filter(id=id)
+    print(companyset)
+    if companyset:
+
+        companyset.delete()
+        return redirect('addskillsset')
+
+
+    return render(request, 'users/addskillsset.html',{'companyset':companyset})
 
 @login_required
 def updatecompany(request, id):
@@ -283,9 +412,14 @@ def edudetails(request):
 
     if PersonalDetailsModel.objects.filter(user=request.user).count() ==0:
         isadded=True
+        print(isadded)
+    elif EdudetailsModel.objects.filter(user=request.user).count() !=0:
+        isadded=True
+        print(isadded)
     else:
         isadded=False
 
+    print(isadded)
 
     if request.method == 'POST':
         u_form = EduDetailsUpdateForm(request.POST)
@@ -397,7 +531,8 @@ def edudetails(request):
         'u_form': u_form,
 
         }
-    if isadded:
+
+    if not isadded:
         return render(request, 'users/edudetails.html', context)
     else:
         return redirect('edudetailsView')

@@ -1,18 +1,106 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
-    {% endfor %}
+<div class="row">
+  <div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+  <div class="card-header">Total Viewed </div>
+  <div class="card-body">
+    <h5 class="card-title">12</h5>
+    <p class="card-text">View in details</p>
+  </div>
+</div>
 
 
+</div>
+<div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+<div class="card-header">Total Applied</div>
+<div class="card-body">
+  <h5 class="card-title">11</h5>
+  <p class="card-text">View in Details</p>
+</div>
+</div>
+
+
+</div>
+<div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+<div class="card-header">Total scheduled</div>
+<div class="card-body">
+  <h5 class="card-title">21</h5>
+  <p class="card-text">View in Details</p>
+</div>
+</div>
+
+
+</div>
+<div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+<div class="card-header">Header</div>
+<div class="card-body">
+  <h5 class="card-title">Light card title</h5>
+  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+</div>
+
+
+</div>
+<div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+<div class="card-header">Header</div>
+<div class="card-body">
+  <h5 class="card-title">Light card title</h5>
+  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+</div>
+
+
+</div>
+
+<div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+<div class="card-header">Header</div>
+<div class="card-body">
+  <h5 class="card-title">Light card title</h5>
+  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+</div>
+
+
+</div>
+<div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+<div class="card-header">Header</div>
+<div class="card-body">
+  <h5 class="card-title">Light card title</h5>
+  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+</div>
+
+
+</div>
+<div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+<div class="card-header">Header</div>
+<div class="card-body">
+  <h5 class="card-title">Light card title</h5>
+  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+</div>
+
+
+</div>
+
+
+  <div class="col-sm-4">
+<div class="card bg-light mb-4" style="max-width: 18rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h5 class="card-title">Light card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+
+
+</div>
 {% endblock content %}

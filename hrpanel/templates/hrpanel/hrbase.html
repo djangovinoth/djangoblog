@@ -3,7 +3,7 @@
 <html>
 
 <head>
-
+  <!-- https://www.cssmatic.com/box-shadow -->
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,6 +16,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <!-- Bootstrap CSS -->
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
@@ -73,7 +74,7 @@
 
 
 
-  <main role="main" class="container col-md-12">
+  <main role="main" class="container col-md-12 ">
 
     <div class="row ">
 
@@ -96,26 +97,36 @@
             </p>
           </div>
         </div> -->
-      <div class="col-md-1.5">
+
+      <div class="col-md-1.8  p-3">
+
+        <div class="content-section">
+          <div class="media" >
+            <div class="media-body">
+              <img class="rounded-circle account-img" src="{{ user.permission.recruiterpic.url }}" style="width: 80px;height: 80px;">
+
+            </div>
+          </div>
 
 
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-mail' %}">Mail</a></li>
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-freshersprofile' %}">Freshers Profile</a></li>
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-experienceprofile' %}">Expereince Profile</a></li>
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-createnewjob' %}">Create New Job Id</a></li>
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-postjob' %}">Post a Job</a></li>
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-shortlisted' %}">Short Listed</a></li>
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-addtechnicalteam' %}">Add Technical Team</a></li>
 
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-offlineuser' %}">Offline Users</a></li>
-          <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-candidatetracker'%}">Candiate Traker</a></li>
-        </ul>
-        </p>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-mail' %}">Mail</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-freshersprofile' %}">Freshers Profile</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-experienceprofile' %}">Expereince Profile</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-createnewjob' %}">Create New Job Id</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-postjob' %}">Post a Job</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-shortlisted' %}">Short Listed</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-addtechnicalteam' %}">Add Technical Team</a></li>
 
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-offlineuser' %}">Offline Users</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{% url 'hrpanel-candidatetracker'%}">Candiate Traker</a></li>
+          </ul>
+          </p>
+        </div>
       </div>
 
-      <div class="col-md-10 scroll" align="left">
+      <div class="col-md-10 scroll  " align="left">
         {% if messages %}
         {% for message in messages %}
         {%if message.tags == "error" %}
@@ -143,11 +154,11 @@
 
   <link rel="stylesheet" type="text/css" href="{% static 'blog/jquery.datetimepicker.css' %}">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-    <script src="{% static 'blog/jquery.datetimepicker.js'%}"></script>
-      <script src="{% static 'blog/jquery.datetimepicker.full.js'%}"></script>
-      {% block script %}{% endblock %}
+  <script src="{% static 'blog/jquery.datetimepicker.js'%}"></script>
+  <script src="{% static 'blog/jquery.datetimepicker.full.js'%}"></script>
+  {% block script %}{% endblock %}
 </body>
 
 </html>

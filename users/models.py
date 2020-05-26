@@ -7,7 +7,44 @@ from django_countries.fields import CountryField
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
+class CompanyCode(models.Model):
+    companyname = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=100)
+    landline = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    location=models.CharField(max_length=100)
+    companyprofile = models.FileField( default='default.jpg',upload_to='resume')
+    tin=models.CharField(max_length=100)
 
+
+
+
+
+class Permission(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    recruiterpic = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    mobile = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    code = models.CharField(max_length=100)
+    location=models.CharField(max_length=100)
+    resume = models.FileField( default='default.jpg',upload_to='resume')
+    Role=models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.user.username}'
+
+    def save(self, *args, **kwargs):
+        super(Permission, self).save(*args, **kwargs)
+        img=Image.open(self.image.path)
+
+        if img.height>300 or img.width>300:
+            output_size=(300,300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
+
+# new udpate
 
 
 class PermissionModel(models.Model):

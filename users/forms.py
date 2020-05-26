@@ -1,13 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile,EdudetailsModel,PersonalDetailsModel,PermissionModel
+from .models import Profile,EdudetailsModel,PersonalDetailsModel,PermissionModel,Permission,CompanyCode
 from django.urls import reverse
 from crispy_forms.bootstrap import Field, InlineRadios, TabHolder, Tab
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div, Fieldset
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
+from django.forms import ModelForm, Textarea
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -15,13 +16,88 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        help_texts = {
+            'username': None,
+            'email': None,
+            'password1':None,
+            'password2':None
+        }
 
 
-class PermissionForm(forms.ModelForm):
+class PermissonForm(forms.ModelForm):
 
     class Meta:
-        model = PermissionModel
-        fields = ['phone', 'role','company','resume','image']
+        model = Permission
+        fields = ['image', 'mobile', 'company', 'code']
+
+
+class EmployeePermissonForm(forms.ModelForm):
+
+    class Meta:
+        model = Permission
+        fields = ['mobile', 'resume','Role']
+        required = (
+            'mobile',
+            'resume',
+        )
+    def __init__(self, *args, **kwargs):
+        super(EmployeePermissonForm, self).__init__(*args, **kwargs)
+        self.fields['Role'].disabled = True
+        self.fields['Role'].initial = 'emp'
+
+
+
+class HRPermissonForm(forms.ModelForm):
+
+    class Meta:
+        model = Permission
+        fields = ['recruiterpic', 'mobile', 'company', 'code','location','Role']
+        required = (
+            'recruiterpic',
+            'mobile',
+            'company',
+            'code',
+            'location',
+        )
+    def __init__(self, *args, **kwargs):
+        super(HRPermissonForm, self).__init__(*args, **kwargs)
+        self.fields['Role'].disabled = True
+        self.fields['Role'].initial = 'hr'
+
+class CompanyCodeForm(forms.ModelForm):
+
+    class Meta:
+        model = CompanyCode
+        fields = ['companyname', 'mobile', 'landline', 'address','location','companyprofile','tin']
+        required = (
+            'companyname', 'mobile', 'landline', 'address','location','companyprofile','tin',
+        )
+        widgets = {
+            'address': Textarea(),
+        }
+
+
+class ProfileUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Permission
+        fields = ['image', 'mobile']
+
+# new update
+#
+# class UserRegisterForm(UserCreationForm):
+#     email = forms.EmailField()
+#
+#     class Meta:
+#         model = User
+#         fields = ['username', 'email', 'password1', 'password2']
+
+
+# class PermissionForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = PermissionModel
+#         fields = ['phone', 'role','company','resume','image']
 
 
 
@@ -40,11 +116,11 @@ class ProfileRegisterForm(forms.ModelForm):
         fields = ['phone','image','resume']
 
 
-class ProfileUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-
-        fields = ['phone','image','resume']
+# class ProfileUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#
+#         fields = ['phone','image','resume']
 
 
 

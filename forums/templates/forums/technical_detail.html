@@ -1,0 +1,71 @@
+{%extends "blog/base.html"%}
+
+
+{%block content%}
+
+<article class="media content-section">
+  <img class="rounded-circle article-img" src="{{object.author.profile.image.url}}">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{%url 'user-technicals' object.author.username%}">{{ object.author }}</a>
+      <small class="text-muted">{{ object.date_technicaled|date:"F d, Y" }}</small>
+
+    </div>
+    <h2 class="article-title">Title : {{ object.title }}</h2>
+    <p class="article-content">Question : {{ object.content }}</p>
+
+
+
+
+    <div class="">
+      <div class="row">
+        <div class="col-1">
+
+          <a href="{%url 'technical-addlike' object.id %}"><i class="fa fa-thumbs-up" aria-hidden="true" style="font-size:25px;"></i></a>
+          <small>{{object.like}}</small>
+
+        </div>
+        <div class="col-1">
+          <a href="{%url 'technical-adddislike' object.id %}"><i class="fa fa-thumbs-down" aria-hidden="true" style="font-size:25px;"></i></a>
+            <small>{{object.dislike}}</small>
+        </div>
+
+
+        {%if object.author == user%}
+        <div class="col-1">
+          <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{%url 'technical-update' object.id %}">Update</a>
+
+        </div>
+
+        <div class="col-1">
+          <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{%url 'technical-delete' object.id %}">Delete</a>
+
+        </div>
+            {%endif%}
+
+    </div>
+    
+
+
+    <div class="col-1">
+
+      <h4>Comments</h4>
+        </div>
+
+
+    <div class="col-1">
+
+        <textarea name="comments" rows="8" cols="80"></textarea>
+        </div>
+
+        <div class="col-1">
+          <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{%url 'technical-delete' object.id %}">Add Comments</a>
+
+        </div>
+
+
+  </div>
+</article>
+
+
+{%endblock content%}

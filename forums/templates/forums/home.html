@@ -1,0 +1,70 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+  <div class="row">
+    <div class="col-2">
+      <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{%url 'technical-create'%}"> Start Your Thread</a>
+    </div>
+    <div class="col-7">
+      <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+    <div class="col-3">
+      <button class="btn btn-outline-info btn-sm mt-1 mb-1" type="button" name="button">Search</button>
+
+    </div>
+  </div>
+</div>
+
+{% for technical in technicals %}
+<article class="media content-section mt-4">
+  <img class="rounded-circle article-img" src="{{technical.author.profile.image.url}}">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{%url 'user-technicals' technical.author.username%}">{{ technical.author }}</a>
+      <small class="text-muted">{{ technical.date_posted|date:"F d, Y" }}</small>
+    </div>
+    <h2><a class="article-title" href="{%url 'technical-detail' technical.id%}">{{ technical.title }}</a></h2>
+
+    <p class="article-content">{{ technical.content }}</p>
+
+    <div class="row">
+      <div class="col-1">
+
+        <a href="{%url 'technical-addlike' technical.id %}"><i class="fa fa-thumbs-up" aria-hidden="true" style="font-size:25px;"></i></a>
+        <small>{{technical.like}}</small>
+
+      </div>
+      <div class="col-1">
+        <a href="{%url 'technical-adddislike' technical.id %}"><i class="fa fa-thumbs-down" aria-hidden="true" style="font-size:25px;"></i></a>
+          <small>{{technical.dislike}}</small>
+
+      </div>
+
+  </div>
+</article>
+
+{%endfor%}
+{%if is_paginated%}
+{%if page_obj.has_previous %}
+<a class="btn btn-outline-info btn-sm mt-1 mb-1" href="?page=1">First</a>
+<a class="btn btn-outline-info btn-sm mt-1 mb-1" href="?page={{page_obj.previous_page_number}}">Previous</a>
+{%endif%}
+{%for num in page_obj.paginator.page_range%}
+{%if page_obj.number == num%}
+<a class="btn btn-info btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
+{%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'-3' %}
+<a class="btn btn-outlineinfo btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
+
+{%endif%}
+{%endfor%}
+
+{%if page_obj.has_next %}
+<a class="btn btn-outline-info btn-sm mt-1 mb-1" href="?page={{page_obj.next_page_number}}">Next</a>
+<a class="btn btn-outline-info btn-sm mt-1 mb-1" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+{%endif%}
+
+{%endif%}
+
+{% endblock content %}

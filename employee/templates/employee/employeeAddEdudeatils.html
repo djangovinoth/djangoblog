@@ -1,0 +1,288 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="content-section">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="form-group">
+      <!-- <legend class="border-bottom mb-4">School Details</legend> -->
+      <h5 style="text-align:center">Add Educational Details</h5>
+
+      <hr>
+      <div class="form-row">
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+          <p>Institution Name</p>
+        </div>
+        <div class="col-md-1.5 mb-3">
+          Qualification
+        </div>
+        <div class="col-md-3 mb-3">
+          Specialization
+        </div>
+        <div class="col-md-1 mb-3">
+          Year Of Passing
+        </div>
+        <div class="col-md-1 mb-3">
+          Score
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+
+
+
+
+        <div class="col-md-4 mb-3">
+          {{e_form.institutionname}}
+        </div>
+        <div class="col-md-1 mb-3">
+          {{e_form.qualification}}
+        </div>
+        <div class="col-md-3 mb-3">
+          {{e_form.specialization}}
+        </div>
+        <div class="col-md-1 mb-3">
+          {{e_form.yearofpassing}}
+        </div>
+        <div class="col-md-1 mb-3">
+          {{e_form.score}}
+        </div>
+
+      </div>
+        <div class="form-row">
+      <div class="col-md-2 mb-3">
+      <button class="btn btn-outline-info btn-sm mt-1 mb-1" type="submit">ADD EDU DETAILS</button>
+      </div>
+      <div class="col-md-1 mb-3">
+      <button class="btn btn-outline-info btn-sm mt-1 mb-1" type="submit">ADD & CONTINUE NEXT</button>
+      </div>
+
+    </div>
+
+    </fieldset>
+
+
+
+
+
+  </form>
+
+</div>
+
+<div class="content-section">
+
+<table class="table-striped table-sm table-bordered table-responsive-sm table-hover mt-2" >
+
+  <thead>
+
+    <th>Institution name</th>
+    <th>Qualification</th>
+    <th>Specialization</th>
+    <th>Year Of Passing</th>
+      <th>Score</th>
+      <th>Edit/Delete</th>
+  </thead>
+  {%for tset in technicalset%}
+  <tr>
+    <td>{{tset.institutionname}}</td>
+    <td>{{tset.qualification}}</td>
+    <td>{{tset.specialization}}</td>
+    <td>{{tset.yearofpassing}}</td>
+        <td>{{tset.score}}</td>
+    <td><a data-toggle="modal" data-target="#myModal{{tset.id}}" href="#"><i class="fa fa-edit" style="font-size:25px" ></i></a>
+
+      <a data-toggle="modal" data-target="#myModaldelete{{tset.id}}" href="#"><i class="fa fa-trash-o" style="font-size:25px;color:red"></i></a></td>
+
+  </tr>
+
+  <div class="modal" id="myModal{{tset.id}}">
+      <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+          <form method="post">
+                {% csrf_token %}
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">{{tset.institutionname}}-{{tset.qualification}}-{{tset.specialization}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+              <div class="form-row">
+                <div class="col-md-3 mb-3">
+                  Institution name :
+                </div>
+
+                    <div class="col-md-3 mb-3">
+            <input type="hidden" name="eduid" value="edit-{{tset.id}}">
+            <input type="text" class="form-control" name="institutionname" value="{{tset.institutionname}}">
+                </div>
+                <div class="col-md-3 mb-3">
+                  Qualification :
+                </div>
+                          <div class="col-md-3 mb-3">
+                            <select class="form-control" name="qualification" >
+                                <option selected >{{tset.qualification}}</option>
+
+
+                                <option>10th</option>
+                                <option>12th</option>
+                                <option>intermidiate</option>
+
+
+                            </select>
+
+
+                </div>
+                <div class="col-md-3 mb-3">
+                  Specialization :
+                </div>
+                      <div class="col-md-3 mb-3">
+
+                        <select class="form-control" name="specialization" >
+                            <option selected >{{tset.specialization}}</option>
+
+
+                            <option>BE</option>
+                            <option>ECE</option>
+
+
+                        </select>
+
+
+                </div>
+                <div class="col-md-3 mb-3">
+                  Year Of Passing :
+                </div>
+                      <div class="col-md-3 mb-3">
+                        <select class="form-control" name="yearofpassing" >
+                            <option selected >{{tset.yearofpassing}}</option>
+
+                            {%for l in lst %}
+                            <option>{{l}}</option>
+                            {%endfor%}
+
+                        </select>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                  Score :
+                </div>
+                      <div class="col-md-3 mb-3">
+              <input type="text" class="form-control" name="score" value="{{tset.score}}">
+                </div>
+
+
+          </div>
+        </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-sm mt-1 mb-1" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger btn-sm mt-1 mb-1" onclick="this.form.submit()">Update</button>
+
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="myModaldelete{{tset.id}}">
+        <div class="modal-dialog modal-lg" >
+          <div class="modal-content">
+            <form method="post">
+                  {% csrf_token %}
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Confirm Delete This Team Below Record</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-row">
+                  <div class="col-md-3 mb-3">
+                    Employee name :
+                  </div>
+
+                      <div class="col-md-3 mb-3">
+              <input type="hidden" name="eduid" value="delete-{{tset.id}}">
+              <input type="text" class="form-control" name="institutionname" value="{{tset.institutionname}}">
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    Phone Number :
+                  </div>
+                            <div class="col-md-3 mb-3">
+              <input type="text" class="form-control" name="qualification" value="{{tset.qualification}}">
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    Emp id :
+                  </div>
+                        <div class="col-md-3 mb-3">
+              <input type="text" class="form-control" name="specialization" value="{{tset.specialization}}">
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    Current Designation :
+                  </div>
+                        <div class="col-md-3 mb-3">
+                <input type="text" class="form-control" name="yearofpassing" value="{{tset.yearofpassing}}">
+                  </div>
+                  <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" name="score" value="{{tset.score}}">
+            </div>
+            </div>
+          </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger btn-sm mt-1 mb-1" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger btn-sm mt-1 mb-1" onclick="this.form.submit()">Delete</button>
+
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+  {%endfor%}
+</table>
+</div>
+
+{% if technicalset.has_other_pages %}
+  <ul class="pagination">
+
+
+    {% if technicalset.has_previous %}
+      <li><a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{ technicalset.previous_page_number }}">Previous</a></li>
+    {% else %}
+      <li class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1 disabled"><span>First</span></li>
+    {% endif %}
+    {% for i in technicalset.paginator.page_range %}
+      {% if technicalset.number == i %}
+        <li class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1 active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if technicalset.has_next %}
+      <li><a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{ technicalset.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1 disabled"><span>Last</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock content %}
