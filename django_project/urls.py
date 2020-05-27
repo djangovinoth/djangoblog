@@ -52,6 +52,7 @@ urlpatterns = [
     path('', include('hrpanel.urls')),
     path('', include('employee.urls')),
     path('', include('forums.urls')),
+    path('', include('interviewforum.urls')),
 
 
 ]

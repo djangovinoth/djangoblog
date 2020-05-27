@@ -1,0 +1,18 @@
+{%extends 'blog/base.html'%}
+
+{%block content%}
+<p style="text-align:center">Publish Your Below Posts</p>
+
+{%for post in interviews%}
+<div class="post">
+  <small class="text-secondary">Created at : {{post.create_date|date:'d-m-Y'}}</small>
+  <br>
+  <small class="text-secondary"><a href="{%url 'interview_detail' pk=post.pk %}">Post Title:  {{post.title}}</a></small>
+  <br>
+  <small class="text-secondary">{{post.text|truncatechars:200}}</small>
+
+
+</div>
+<hr>
+{%endfor%}
+{%endblock%}

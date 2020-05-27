@@ -1,0 +1,86 @@
+{%extends 'blog/base.html'%}
+
+{%block content%}
+<div class="centerstage">
+
+
+        {% if user.is_authenticated%}
+
+        <div class="content-section">
+          <h4 style="text-align:center">Interview Discussions</h4>
+          <div class="row">
+            <div class="col-2.5">
+              <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{%url 'interview_new'%}"> Create Your Own Quetions</a>
+            </div>
+            <div class="col-2">
+              <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{%url 'interview_draft_list'%}"> Publish Your Drafts</a>
+            </div>
+            <div class="col-5">
+              <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </div>
+            <div class="col-2">
+              <button class="btn btn-outline-info btn-sm mt-1 mb-1" type="button" name="button">Search</button>
+
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <div class="container">
+
+
+            <a href="{%url 'interview_new' %}" class="btn btn-primary" >New post</a>
+
+            <a href="{%url 'interview_draft_list' %}" class="btn btn-primary">Drafts</a>
+
+  </div> -->
+
+  <hr>
+
+        {%endif%}
+
+
+{%for post in interview_list%}
+
+
+<div class="post">
+
+
+  <a href="{%url 'interview_detail' pk=post.pk%}"><small class="text-info">{{post.title}}</small></a>
+  <div class="date">
+    <small class="text-secondary">Published by : {{post.author}}  Pubished on : {{post.published_date|date:'D M Y'}} </small>
+    <a href="{%url 'interview_detail' pk=post.pk%}"><small class="text-primary">Comments :  {{post.interviewcomments.count}}</small></a>
+
+  </div>
+
+</div>
+<hr>
+{%endfor%}
+</div>
+
+
+
+
+
+
+{%if is_paginated%}
+  {%if page_obj.has_previous %}
+  <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page=1">First</a>
+  <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.previous_page_number}}">Previous</a>
+  {%endif%}
+{%for num in page_obj.paginator.page_range%}
+{%if page_obj.number == num%}
+<a class="btn btn-info mb-4 btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
+{%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'-3' %}
+<a class="btn btn-outlineinfo mb-4 btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
+
+{%endif%}
+{%endfor%}
+
+{%if page_obj.has_next %}
+<a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.next_page_number}}">Next</a>
+<a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+{%endif%}
+
+{%endif%}
+{%endblock%}

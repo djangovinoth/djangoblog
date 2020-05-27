@@ -1,0 +1,43 @@
+{%extends 'blog/base.html'%}
+{%block content%}
+
+<h4 class="posttitle loader" >{{interview.title}}</h4>
+{%if interview.published_date%}
+<div class="date postdate">
+  <small class="text-secondary">{{interview.published_date}}</small>
+
+</div>
+{%else%}
+<a href="{%url 'inteview_post_publish' pk=interview.pk%}" class="btn btn-primary"> Publish </a>
+{%endif%}
+
+<p class="postcontent"><h5 class="text-dark">{{interview.text|safe|linebreaksbr}}</h5></p>
+
+{%if user.is_authenticated%}
+<a href="{%url 'interview_edit' pk=interview.pk%}" class="btn btn-primary"> edit </a>
+<a href="{%url 'interview_remove' pk=interview.pk%}" class="btn btn-primary"> remove </a>
+
+{%endif%}
+
+<hr>
+
+<a class="btn btn-primary btn-comment"href="{%url 'add_comment_to_interview_post' pk=interview.pk%}">Add comments</a>
+
+<div class="container">
+  {%for comment in interview.interviewcomments.all%}
+  <br>
+  {%if user.is_authenticated or comment.approved_interviewcomment%}
+  {%if not comment.approved_interviewcomment%}
+  <a href="{%url 'interview_comment_remove' pk=comment.pk%}" class="btn btn-primary">remove </a>
+  <a href="{%url 'interview_comment_approve' pk=comment.pk%}" class="btn btn-primary"> approve </a>
+  {%endif%}
+  <p class="postcontent"><small class="text-secondary">{{comment.text|safe|linebreaksbr}}</small></p>
+<small class="text-secondary">Posted by: {{comment.author}}    -       Posted date: {{comment.create_date}}   </small>
+
+  {%endif%}
+
+<hr>
+  {%endfor%}
+
+</div>
+{%endblock%}

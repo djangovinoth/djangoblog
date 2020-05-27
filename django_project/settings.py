@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'interviewforum.apps.InterviewforumConfig',
     'blog.apps.BlogConfig',
     'forums.apps.ForumsConfig',
     'users.apps.UsersConfig',
