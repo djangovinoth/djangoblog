@@ -3,6 +3,7 @@
 {%block content%}
 <p style="text-align:center">Publish Your Below Posts</p>
 
+{% if interviews%}
 {%for post in interviews%}
 <div class="post">
   <small class="text-secondary">Created at : {{post.create_date|date:'d-m-Y'}}</small>
@@ -10,9 +11,41 @@
   <small class="text-secondary"><a href="{%url 'interview_detail' pk=post.pk %}">Post Title:  {{post.title}}</a></small>
   <br>
   <small class="text-secondary">{{post.text|truncatechars:200}}</small>
+  <br>
+  <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="{%url 'inteview_post_publish' pk=post.pk%}" >Publish This Post </a>
 
 
 </div>
+
 <hr>
 {%endfor%}
+{%else %}
+<small class="text-secondary">You dont have any drafts kindly create new one</small>
+<br>
+<a class="btn btn-outline-primary btn-sm mt-1 mb-1" href="{%url 'interview_new'%}"> Create Your Own Quetions</a>
+
+
+{%endif%}
+
+
+{%if is_paginated%}
+  {%if page_obj.has_previous %}
+  <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page=1">First</a>
+  <a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.previous_page_number}}">Previous</a>
+  {%endif%}
+{%for num in page_obj.paginator.page_range%}
+{%if page_obj.number == num%}
+<a class="btn btn-info mb-4 btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
+{%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'-3' %}
+<a class="btn btn-outlineinfo mb-4 btn-sm mt-1 mb-1" href="?page={{num}}">{{num}}</a>
+
+{%endif%}
+{%endfor%}
+
+{%if page_obj.has_next %}
+<a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.next_page_number}}">Next</a>
+<a class="btn btn-outline-info mb-4 btn-sm mt-1 mb-1" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+{%endif%}
+
+{%endif%}
 {%endblock%}

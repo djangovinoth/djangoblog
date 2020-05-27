@@ -78,6 +78,7 @@ def add_comment_to_interview_post(request,pk):
         if form.is_valid():
 
             comment=form.save(commit=False)
+            comment.author=request.user
             comment.interview=interview
             comment.save()
             print('saved')

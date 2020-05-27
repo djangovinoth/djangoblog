@@ -16,7 +16,7 @@ class InterviewForm(forms.ModelForm):
 class InterviewCommentForm(forms.ModelForm):
     class Meta():
         model=InterviewComments
-        fields=('author','text')
+        fields=('text',)
 
         # widgets={
         # 'author':forms.TextInput(attrs={'class':'textinputclass'}),

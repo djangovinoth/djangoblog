@@ -7,19 +7,20 @@
         {% if user.is_authenticated%}
 
         <div class="content-section">
-          <h4 style="text-align:center">Interview Discussions</h4>
+          <h5 style="text-align:center" class="text-secondary">Interview Discussions</h5>
           <div class="row">
+
             <div class="col-2.5">
-              <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{%url 'interview_new'%}"> Create Your Own Quetions</a>
+              <a class="btn btn-outline-primary btn-sm mt-1 mb-1" href="{%url 'interview_new'%}"> Create Your Own Quetions</a>
             </div>
             <div class="col-2">
-              <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{%url 'interview_draft_list'%}"> Publish Your Drafts</a>
+              <a class="btn btn-outline-primary btn-sm mt-1 mb-1" href="{%url 'interview_draft_list'%}"> Publish Your Drafts</a>
             </div>
             <div class="col-5">
               <input class="form-control" type="text" placeholder="Search" aria-label="Search">
             </div>
             <div class="col-2">
-              <button class="btn btn-outline-info btn-sm mt-1 mb-1" type="button" name="button">Search</button>
+              <button class="btn btn-outline-success btn-sm mt-1 mb-1" type="button" name="button">Search</button>
 
             </div>
           </div>
@@ -49,7 +50,7 @@
   <a href="{%url 'interview_detail' pk=post.pk%}"><small class="text-info">{{post.title}}</small></a>
   <div class="date">
     <small class="text-secondary">Published by : {{post.author}}  Pubished on : {{post.published_date|date:'D M Y'}} </small>
-    <a href="{%url 'interview_detail' pk=post.pk%}"><small class="text-primary">Comments :  {{post.interviewcomments.count}}</small></a>
+    <a href="{%url 'interview_detail' pk=post.pk%}"><small class="text-info">Comments :  {{post.interviewcomments.count}}</small></a>
 
   </div>
 
